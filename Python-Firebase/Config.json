@@ -1,0 +1,11 @@
+{ 
+    "apiKey": "AIzaSyCpIzbD8AnIx2kdBXubCE7JGr1JxuihJaA",
+    "authDomain": "database-2cba6.firebaseapp.com",
+    "projectId": "database-2cba6", 
+    "storageBucket": "database-2cba6.appspot.com", 
+    "messagingSenderId": "161045226849", 
+    "appId": "1:161045226849:web:a63160b9a70385340e9120", 
+    "measurementId": "G-SWNLH5E934",
+    "serviceaccount":"serviceAccountKey.json",
+    "databaseURL":"https://database-2cba6-default-rtdb.firebaseio.com/"
+}
