@@ -1,11 +1,13 @@
+#include <boost/filesystem/operations.hpp>
 #include "dir_struct.hxx"
 
-void dir_struct :: add_file (path p)
+void dir_struct :: add_file (fs::path p,
+                             vector<file_data> &files)
 {
   file_data*      new_file;
 
   new_file = new file_data (p);
-  this->files.push_back (*new_file);
+  files.push_back (*new_file);
 
   return;
 }
@@ -25,17 +27,19 @@ vector<file_data> dir_struct:: get_files()
   return this->files;
 }
 
-void dir_struct :: get_files_from_dir (path p)
+void dir_struct :: get_files_from_dir_h (fs::path p, 
+                                         vector<file_data> &files)
 {
-   vec v;                                             
-   
+   vec          v;
+
    copy (directory_iterator(p), directory_iterator(), back_inserter(v));
+   
    for (vec::const_iterator it(v.begin()), it_end(v.end()); it != it_end; ++it)
    {
      if (is_regular_file (*it))
-       add_file (*it);
+        add_file (*it, files);
      else 
-       get_files_from_dir(*it);
+        get_files_from_dir_h (*it, files);
    }
 
   return;
@@ -127,26 +131,37 @@ void dir_struct:: load_files ()
     archive_read_free(a);
 }
 
-dir_struct :: dir_struct (path p)
+vector <file_data> dir_struct::get_files_from_dir (fs::path p)
 {
+  vector <file_data>               vec_files;
+
+  get_files_from_dir_h (p, vec_files);
+
+  return vec_files;  
+}
+
+dir_struct :: dir_struct (fs::path p)
+{
+  this->loc = p;
+
   try
   {
     if (exists(p))    
     {
       if (is_regular_file(p))        
         {
-          cout << "Path must be a directory not a file.\n" << '\n';   
+          cout << "fs::path must be a directory not a file.\n" << '\n';   
         }  
       else if (is_directory (p))      
         {
-          get_files_from_dir (p);
+          this->files = get_files_from_dir (p);
           this->dir_size  = get_dir_size();
         }
       else
         cout << p << " exists, but is not a directory\n";
     }
     else
-      cout << p << "Path does not exist\n";
+      cout << p << "fs::path does not exist\n";
   }
 
   catch (const filesystem_error& ex)
@@ -157,5 +172,62 @@ dir_struct :: dir_struct (path p)
   return;
 }
 
+vector <file_data> dir_struct :: get_new_files ()
+{
+    map <fs::path, file_data*>              old_struct;
+    vector<file_data>                       new_files, new_struct;
+    
+    new_struct = get_files_from_dir (this->loc);
+    
+    for (auto &it:this->files)
+      old_struct [it.get_path()] = &it;
 
+    for(auto it:new_struct)
+    {
+      if (old_struct[it.get_path()] == NULL)
+        new_files.push_back(it);
+    }
+
+    return new_files;  
+}
+
+vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
+{
+  file_data*                          old_file = NULL;
+  vector <file_data>                  mod_files, new_files;
+  map <fs::path, file_data>           mp;
+
+  for(auto it: this->files)
+    mp[it.get_path()] = it;
+  
+  for(auto it: prev_version)
+  {
+    *old_file = mp[it.get_path()];
+
+    if (old_file == NULL)
+      {
+          old_file->set_status (DELETED);
+          mod_files.push_back (*old_file);
+      }
+    else if (mp[it.get_path ()].get_last_mod_time () > it.get_last_mod_time ())
+      {
+          old_file->set_status (MODIFIED);
+          mod_files.push_back (*old_file);
+      }
+  }
+
+  new_files = get_new_files();
+
+  for (auto it:new_files)
+    mod_files.push_back (it);
+
+  return mod_files;
+}
+
+vector <file_data> dir_struct :: get_status ()
+{
+  vector <file_data> prev = this->prev_version->get_files();
+
+  return prev;  
+}
 

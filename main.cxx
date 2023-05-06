@@ -1,8 +1,6 @@
 #include "main.hxx"
 
-
-
-namespace fs = std::filesystem;
+namespace fs = boost::filesystem;
 
 void find_path(const std::string& file, std::vector<std::string>& path) {
     // implementation of git add function

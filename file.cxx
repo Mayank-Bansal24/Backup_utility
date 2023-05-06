@@ -2,7 +2,18 @@
 #include <system_error>
 namespace fs = boost::filesystem;
 
-/* Constructor */
+/* Default constructor*/
+file_data :: file_data()
+{
+    this->empty = true;
+    this->file_size = 0;
+    this->status = -1;
+    this->last_mod_time = time(0);
+    this->loc = path ("./");
+    return;
+}
+
+/* Parameterized constructor */
 file_data   ::  file_data (path loc)
 {
     std::error_code             ec;
@@ -43,4 +54,32 @@ path file_data :: get_path ()
 time_t file_data :: get_last_mod_time()
 {
     return this->last_mod_time;
+}
+
+void file_data :: get_updated ()
+{
+     
+    if((this->empty = fs::is_empty (loc)))
+        return;
+        
+    if (is_regular_file(loc))        
+        {
+            this->file_size = fs::file_size (loc);
+            this->status = 1;
+        }
+    else
+        {
+            this->file_size = 0;
+            this->status = 0;
+        }
+    
+    this->last_mod_time = fs::last_write_time (loc);
+    return;
+}
+
+
+void file_data :: set_status (int status)
+{
+    this->status = status;
+    return;
 }
