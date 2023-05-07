@@ -1,0 +1,109 @@
+Build started at 2023-05-06T16:13:22.706924
+Main binary: /usr/bin/python3
+Build Options: 
+Python system: Linux
+The Meson build system
+Version: 0.53.2
+Source dir: /home/mayank02/Documents/proj/Backup_utility
+Build dir: /home/mayank02/Documents/proj/Backup_utility/build
+Build type: native build
+Project name: backup_util
+Project version: 0.1
+No CXXFLAGS in the environment, not changing global flags.
+No LDFLAGS in the environment, not changing global flags.
+No CPPFLAGS in the environment, not changing global flags.
+Sanity testing C++ compiler: c++
+Is cross compiler: False.
+Sanity check compiler command line: c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.cc -o /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.exe -pipe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.exe
+C++ compiler for the build machine: c++ (gcc 9.4.0 "c++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
+C++ linker for the build machine: c++ ld.bfd 2.34
+No CXXFLAGS in the environment, not changing global flags.
+No LDFLAGS in the environment, not changing global flags.
+No CPPFLAGS in the environment, not changing global flags.
+Sanity testing C++ compiler: c++
+Is cross compiler: False.
+Sanity check compiler command line: c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.cc -o /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.exe -pipe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.exe
+C++ compiler for the host machine: c++ (gcc 9.4.0 "c++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
+C++ linker for the host machine: c++ ld.bfd 2.34
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Target machine cpu family: x86_64
+Target machine cpu: x86_64
+Boost library root dir is None
+Boost include directory is None
+Running compile:
+Working directory:  /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpfpad9n40
+Command line:  c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpfpad9n40/testfile.cpp -pipe -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -fpermissive 
+
+Code:
+ 
+        #include <boost/version.hpp>
+        #ifndef BOOST_LIB_VERSION
+        # define BOOST_LIB_VERSION
+        #endif
+        "MESON_GET_DEFINE_DELIMITER"
+BOOST_LIB_VERSION
+Compiler stdout:
+         "MESON_GET_DEFINE_DELIMITER"
+"1_71"
+
+Compiler stderr:
+ 
+Running compile:
+Working directory:  /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmp1_l12_y1
+Command line:  c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmp1_l12_y1/testfile.cpp -o /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmp1_l12_y1/output.exe -pipe -D_FILE_OFFSET_BITS=64 -O0 -fpermissive -Wl,--start-group -lboost_filesystem -Wl,--end-group -Wl,--allow-shlib-undefined 
+
+Code:
+ int main(void) { return 0; }
+Compiler stdout:
+ 
+Compiler stderr:
+ 
+Link args for boost module "filesystem" are ['-lboost_filesystem']
+Boost library directory is None
+Installed Boost libraries: 
+boost_filesystem ['-lboost_filesystem']
+Run-time dependency Boost (filesystem) found: YES 1.71
+Build targets in project: 1
+
+Found ninja-1.10.0 at /usr/bin/ninja
+Running compile:
+Working directory:  /tmp/tmpdds3rgo8
+Command line:  c++ /tmp/tmpdds3rgo8/testfile.cpp -o /tmp/tmpdds3rgo8/output.obj -pipe -D_FILE_OFFSET_BITS=64 -c -std=c++17 
+
+Code:
+ int i = static_cast<int>(0);
+Compiler stdout:
+ 
+Compiler stderr:
+ 
+Compiler accepts -std=c++17: YES
+Running compile:
+Working directory:  /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpomiaf84_
+Command line:  c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpomiaf84_/testfile.cpp -o /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpomiaf84_/output.obj -pipe -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
+
+Code:
+ 
+Compiler stdout:
+ install: /usr/lib/gcc/x86_64-linux-gnu/9/
+programs: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/
+libraries: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/9/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/9/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
+
+Compiler stderr:
+ 

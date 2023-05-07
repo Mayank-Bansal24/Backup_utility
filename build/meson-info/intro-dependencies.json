@@ -1,0 +1,1 @@
+[{"name": "boost", "version": "1.71", "compile_args": [], "link_args": ["-lboost_filesystem"]}]
