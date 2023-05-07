@@ -4,12 +4,11 @@ project ('backup_util',
 	  default_options : ['cpp_std=c++17'])
 	  
 boost_dep = dependency('boost', modules : ['filesystem']) 
+libarch_dep = dependency('libarchive')
 
 executable ('backup_util',
 	    'main.cxx',
 		'init.cxx',
 		'file.cxx',
 		'dir_struct.cxx',
-	     dependencies : boost_dep)
-
-
+	     dependencies : [boost_dep, libarch_dep])

@@ -3,6 +3,8 @@
 #include <bits/stdc++.h>
 #include <boost/filesystem.hpp>
 #include "file.hxx"
+#include <archive.h>
+#include <archive_entry.h>
 
 using namespace boost::filesystem;
 using namespace std;
@@ -24,5 +26,7 @@ class dir_struct
     
     vector <file_data>          get_files ();
     intmax_t                    get_dir_size ();
+    void                        save_files ();
+    void                        load_files ();
 
 };
