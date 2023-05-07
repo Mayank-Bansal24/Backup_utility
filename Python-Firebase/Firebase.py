@@ -1,5 +1,6 @@
-import pyrebase
+from pyrebase import pyrebase
 import os
+import sys
 import json
 Path =os.path.dirname(__file__)
 
@@ -12,7 +13,7 @@ def fill_details():
         print(attr)
         data[attr]=input()
     jsonString = json.dumps(data)
-    jsonFile = open(Path+"\Config.json", "w")
+    jsonFile = open(Path+"Config.json", "w")
     jsonFile.write(jsonString)
     jsonFile.close()
     print("Now Copy the AccountKey file into the Firebase folder")
@@ -131,6 +132,27 @@ def geturl(Projname,RFilename):
       print(str(e))
       return error
     
-    
-    
+cmd=sys.argv[1]
 
+if(cmd=="fill_details"):
+  fill_details()
+elif(cmd=="initialize"):
+  initialize(sys.argv[2])
+elif(cmd=="upload_file"):
+  upload_file(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
+elif(cmd=="delete_file"):
+  upload_file(sys.argv[2],sys.argv[3])
+elif(cmd=="upload_file"):
+  upload_file(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
+elif(cmd=="upload_file"):
+  upload_file(sys.argv[2],sys.argv[3])
+
+# print(sys.argv[i], end = " ")
+#      
+# # Addition of numbers
+# Sum = 0
+# # Using argparse module
+# for i in range(1, n):
+#     Sum += int(sys.argv[i])
+#      
+# print("\n\nResult:", Sum)
