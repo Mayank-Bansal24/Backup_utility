@@ -18,8 +18,8 @@ file_data   ::  file_data (path loc)
 {
     std::error_code             ec;
     
-    if((this->empty = fs::is_empty (loc)))
-        return;
+    this->empty = fs::is_empty (loc);
+        
         
     if (is_regular_file(loc))        // is p a regular file?
         {
