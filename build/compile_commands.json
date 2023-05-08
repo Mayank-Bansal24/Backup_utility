@@ -1,26 +1,26 @@
 [
   {
-    "directory": "/home/mayank02/Documents/proj/Backup_utility/build",
-    "command": "c++ -Ibackup_util@exe -I. -I.. -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -std=c++17 -g -MD -MQ 'backup_util@exe/main.cxx.o' -MF 'backup_util@exe/main.cxx.o.d' -o 'backup_util@exe/main.cxx.o' -c ../main.cxx",
+    "directory": "/home/mohit/Documents/backup_util/build",
+    "command": "c++ -Ibackup_util.p -I. -I.. -I/usr/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++17 -O0 -g -DBOOST_FILESYSTEM_DYN_LINK=1 -DBOOST_ALL_NO_LIB -MD -MQ backup_util.p/main.cxx.o -MF backup_util.p/main.cxx.o.d -o backup_util.p/main.cxx.o -c ../main.cxx",
     "file": "../main.cxx",
-    "output": "backup_util@exe/main.cxx.o"
+    "output": "backup_util.p/main.cxx.o"
   },
   {
-    "directory": "/home/mayank02/Documents/proj/Backup_utility/build",
-    "command": "c++ -Ibackup_util@exe -I. -I.. -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -std=c++17 -g -MD -MQ 'backup_util@exe/init.cxx.o' -MF 'backup_util@exe/init.cxx.o.d' -o 'backup_util@exe/init.cxx.o' -c ../init.cxx",
+    "directory": "/home/mohit/Documents/backup_util/build",
+    "command": "c++ -Ibackup_util.p -I. -I.. -I/usr/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++17 -O0 -g -DBOOST_FILESYSTEM_DYN_LINK=1 -DBOOST_ALL_NO_LIB -MD -MQ backup_util.p/init.cxx.o -MF backup_util.p/init.cxx.o.d -o backup_util.p/init.cxx.o -c ../init.cxx",
     "file": "../init.cxx",
-    "output": "backup_util@exe/init.cxx.o"
+    "output": "backup_util.p/init.cxx.o"
   },
   {
-    "directory": "/home/mayank02/Documents/proj/Backup_utility/build",
-    "command": "c++ -Ibackup_util@exe -I. -I.. -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -std=c++17 -g -MD -MQ 'backup_util@exe/file.cxx.o' -MF 'backup_util@exe/file.cxx.o.d' -o 'backup_util@exe/file.cxx.o' -c ../file.cxx",
+    "directory": "/home/mohit/Documents/backup_util/build",
+    "command": "c++ -Ibackup_util.p -I. -I.. -I/usr/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++17 -O0 -g -DBOOST_FILESYSTEM_DYN_LINK=1 -DBOOST_ALL_NO_LIB -MD -MQ backup_util.p/file.cxx.o -MF backup_util.p/file.cxx.o.d -o backup_util.p/file.cxx.o -c ../file.cxx",
     "file": "../file.cxx",
-    "output": "backup_util@exe/file.cxx.o"
+    "output": "backup_util.p/file.cxx.o"
   },
   {
-    "directory": "/home/mayank02/Documents/proj/Backup_utility/build",
-    "command": "c++ -Ibackup_util@exe -I. -I.. -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -std=c++17 -g -MD -MQ 'backup_util@exe/dir_struct.cxx.o' -MF 'backup_util@exe/dir_struct.cxx.o.d' -o 'backup_util@exe/dir_struct.cxx.o' -c ../dir_struct.cxx",
+    "directory": "/home/mohit/Documents/backup_util/build",
+    "command": "c++ -Ibackup_util.p -I. -I.. -I/usr/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++17 -O0 -g -DBOOST_FILESYSTEM_DYN_LINK=1 -DBOOST_ALL_NO_LIB -MD -MQ backup_util.p/dir_struct.cxx.o -MF backup_util.p/dir_struct.cxx.o.d -o backup_util.p/dir_struct.cxx.o -c ../dir_struct.cxx",
     "file": "../dir_struct.cxx",
-    "output": "backup_util@exe/dir_struct.cxx.o"
+    "output": "backup_util.p/dir_struct.cxx.o"
   }
 ]

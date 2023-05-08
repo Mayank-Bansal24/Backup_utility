@@ -1,91 +1,188 @@
-Build started at 2023-05-06T16:13:22.706924
-Main binary: /usr/bin/python3
+Build started at 2023-05-07T19:24:22.082650
+Main binary: /usr/bin/python
 Build Options: 
 Python system: Linux
 The Meson build system
-Version: 0.53.2
-Source dir: /home/mayank02/Documents/proj/Backup_utility
-Build dir: /home/mayank02/Documents/proj/Backup_utility/build
+Version: 1.0.1
+Source dir: /home/mohit/Documents/backup_util
+Build dir: /home/mohit/Documents/backup_util/build
 Build type: native build
 Project name: backup_util
 Project version: 0.1
-No CXXFLAGS in the environment, not changing global flags.
-No LDFLAGS in the environment, not changing global flags.
-No CPPFLAGS in the environment, not changing global flags.
+-----
+Detecting compiler via: c++ --version
+compiler returned <Popen: returncode: 0 args: ['c++', '--version']>
+compiler stdout:
+c++ (GCC) 12.2.1 20230201
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+compiler stderr:
+
+Running command: c++ -E -dM -
+-----
+Detecting linker via: c++ -Wl,--version
+linker returned <Popen: returncode: 0 args: ['c++', '-Wl,--version']>
+linker stdout:
+GNU ld (GNU Binutils) 2.40
+Copyright (C) 2023 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or (at your option) a later version.
+This program has absolutely no warranty.
+
+linker stderr:
+collect2 version 12.2.1 20230201
+/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc7c0Bpe.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../.. --version -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib/crtn.o
+
 Sanity testing C++ compiler: c++
 Is cross compiler: False.
-Sanity check compiler command line: c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.cc -o /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.exe -pipe -D_FILE_OFFSET_BITS=64
+Sanity check compiler command line: c++ sanitycheckcpp.cc -o sanitycheckcpp.exe -D_FILE_OFFSET_BITS=64
 Sanity check compile stdout:
 
 -----
 Sanity check compile stderr:
 
 -----
-Running test binary command: /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.exe
-C++ compiler for the build machine: c++ (gcc 9.4.0 "c++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
-C++ linker for the build machine: c++ ld.bfd 2.34
-No CXXFLAGS in the environment, not changing global flags.
-No LDFLAGS in the environment, not changing global flags.
-No CPPFLAGS in the environment, not changing global flags.
+Running test binary command:  /home/mohit/Documents/backup_util/build/meson-private/sanitycheckcpp.exe
+C++ compiler for the host machine: c++ (gcc 12.2.1 "c++ (GCC) 12.2.1 20230201")
+C++ linker for the host machine: c++ ld.bfd 2.40
+-----
+Detecting compiler via: c++ --version
+compiler returned <Popen: returncode: 0 args: ['c++', '--version']>
+compiler stdout:
+c++ (GCC) 12.2.1 20230201
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+compiler stderr:
+
+Running command: c++ -E -dM -
+-----
+Detecting linker via: c++ -Wl,--version
+linker returned <Popen: returncode: 0 args: ['c++', '-Wl,--version']>
+linker stdout:
+GNU ld (GNU Binutils) 2.40
+Copyright (C) 2023 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or (at your option) a later version.
+This program has absolutely no warranty.
+
+linker stderr:
+collect2 version 12.2.1 20230201
+/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cclp94SU.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../.. --version -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib/crtn.o
+
 Sanity testing C++ compiler: c++
 Is cross compiler: False.
-Sanity check compiler command line: c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.cc -o /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.exe -pipe -D_FILE_OFFSET_BITS=64
+Sanity check compiler command line: c++ sanitycheckcpp.cc -o sanitycheckcpp.exe -D_FILE_OFFSET_BITS=64
 Sanity check compile stdout:
 
 -----
 Sanity check compile stderr:
 
 -----
-Running test binary command: /home/mayank02/Documents/proj/Backup_utility/build/meson-private/sanitycheckcpp.exe
-C++ compiler for the host machine: c++ (gcc 9.4.0 "c++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
-C++ linker for the host machine: c++ ld.bfd 2.34
+Running test binary command:  /home/mohit/Documents/backup_util/build/meson-private/sanitycheckcpp.exe
+C++ compiler for the build machine: c++ (gcc 12.2.1 "c++ (GCC) 12.2.1 20230201")
+C++ linker for the build machine: c++ ld.bfd 2.40
 Build machine cpu family: x86_64
 Build machine cpu: x86_64
 Host machine cpu family: x86_64
 Host machine cpu: x86_64
 Target machine cpu family: x86_64
 Target machine cpu: x86_64
-Boost library root dir is None
-Boost include directory is None
+Pkg-config binary for 1 is not cached.
+Pkg-config binary missing from cross or native file, or env var undefined.
+Trying a default Pkg-config fallback at pkg-config
+Found pkg-config: /usr/bin/pkg-config (1.8.1)
+Determining dependency 'boost' with pkg-config executable '/usr/bin/pkg-config'
+env[PKG_CONFIG_PATH]: 
+Called `/usr/bin/pkg-config --modversion boost` -> 1
+stderr:
+Package boost was not found in the pkg-config search path.
+Perhaps you should add the directory containing `boost.pc'
+to the PKG_CONFIG_PATH environment variable
+Package 'boost', required by 'virtual:world', not found
+-----------
+Checking potential boost root /usr/include/c++
+Checking potential boost root /usr/include/c++/12.2.1
+Checking potential boost root /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1
+Checking potential boost root /usr/local
+Checking potential boost root /usr
 Running compile:
-Working directory:  /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpfpad9n40
-Command line:  c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpfpad9n40/testfile.cpp -pipe -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -fpermissive 
+Working directory:  /home/mohit/Documents/backup_util/build/meson-private/tmppqrnv6yy
+Command line:  c++ /home/mohit/Documents/backup_util/build/meson-private/tmppqrnv6yy/testfile.cpp -o /home/mohit/Documents/backup_util/build/meson-private/tmppqrnv6yy/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
 
 Code:
  
-        #include <boost/version.hpp>
-        #ifndef BOOST_LIB_VERSION
-        # define BOOST_LIB_VERSION
-        #endif
-        "MESON_GET_DEFINE_DELIMITER"
-BOOST_LIB_VERSION
 Compiler stdout:
-         "MESON_GET_DEFINE_DELIMITER"
-"1_71"
+ install: /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/
+programs: =/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/bin/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/bin/
+libraries: =/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/lib/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib/:/lib/x86_64-pc-linux-gnu/12.2.1/:/lib/../lib/:/usr/lib/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../:/lib/:/usr/lib/
 
 Compiler stderr:
  
-Running compile:
-Working directory:  /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmp1_l12_y1
-Command line:  c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmp1_l12_y1/testfile.cpp -o /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmp1_l12_y1/output.exe -pipe -D_FILE_OFFSET_BITS=64 -O0 -fpermissive -Wl,--start-group -lboost_filesystem -Wl,--end-group -Wl,--allow-shlib-undefined 
-
-Code:
- int main(void) { return 0; }
-Compiler stdout:
- 
-Compiler stderr:
- 
-Link args for boost module "filesystem" are ['-lboost_filesystem']
-Boost library directory is None
-Installed Boost libraries: 
-boost_filesystem ['-lboost_filesystem']
-Run-time dependency Boost (filesystem) found: YES 1.71
+  - potential library dirs: ['/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1', '/usr/lib']
+  - potential include dirs: ['/usr/include']
+  - found boost library dir: /usr/lib
+  - found boost 1.81.0 include dir: /usr/include
+  - filtered library list:
+    - <LIB: -M ------ ??? ? 1_81 boost_atomic                     /usr/lib/libboost_atomic.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_chrono                     /usr/lib/libboost_chrono.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_container                  /usr/lib/libboost_container.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_context                    /usr/lib/libboost_context.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_contract                   /usr/lib/libboost_contract.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_coroutine                  /usr/lib/libboost_coroutine.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_date_time                  /usr/lib/libboost_date_time.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_fiber                      /usr/lib/libboost_fiber.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_filesystem                 /usr/lib/libboost_filesystem.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_graph                      /usr/lib/libboost_graph.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_graph_parallel             /usr/lib/libboost_graph_parallel.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_iostreams                  /usr/lib/libboost_iostreams.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_json                       /usr/lib/libboost_json.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_locale                     /usr/lib/libboost_locale.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_log                        /usr/lib/libboost_log.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_log_setup                  /usr/lib/libboost_log_setup.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_math_c99                   /usr/lib/libboost_math_c99.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_math_c99f                  /usr/lib/libboost_math_c99f.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_math_c99l                  /usr/lib/libboost_math_c99l.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_math_tr1                   /usr/lib/libboost_math_tr1.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_math_tr1f                  /usr/lib/libboost_math_tr1f.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_math_tr1l                  /usr/lib/libboost_math_tr1l.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_mpi                        /usr/lib/libboost_mpi.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_mpi_python310              /usr/lib/libboost_mpi_python310.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_nowide                     /usr/lib/libboost_nowide.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_numpy310                   /usr/lib/libboost_numpy310.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_prg_exec_monitor           /usr/lib/libboost_prg_exec_monitor.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_program_options            /usr/lib/libboost_program_options.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_python310                  /usr/lib/libboost_python310.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_random                     /usr/lib/libboost_random.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_regex                      /usr/lib/libboost_regex.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_serialization              /usr/lib/libboost_serialization.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_stacktrace_addr2line       /usr/lib/libboost_stacktrace_addr2line.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_stacktrace_basic           /usr/lib/libboost_stacktrace_basic.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_stacktrace_noop            /usr/lib/libboost_stacktrace_noop.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_system                     /usr/lib/libboost_system.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_thread                     /usr/lib/libboost_thread.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_timer                      /usr/lib/libboost_timer.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_type_erasure               /usr/lib/libboost_type_erasure.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_unit_test_framework        /usr/lib/libboost_unit_test_framework.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_url                        /usr/lib/libboost_url.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_wave                       /usr/lib/libboost_wave.so.1.81.0>
+    - <LIB: -M ------ ??? ? 1_81 boost_wserialization             /usr/lib/libboost_wserialization.so.1.81.0>
+  - found:
+    - boost_filesystem         link=['/usr/lib/libboost_filesystem.so.1.81.0'] comp=['-DBOOST_FILESYSTEM_DYN_LINK=1']
+  - final compile args: ['-I/usr/include', '-DBOOST_FILESYSTEM_DYN_LINK=1', '-DBOOST_ALL_NO_LIB']
+  - final link args:    ['/usr/lib/libboost_filesystem.so.1.81.0']
+Run-time dependency Boost (found: filesystem) found: YES 1.81.0 (/usr)
 Build targets in project: 1
 
-Found ninja-1.10.0 at /usr/bin/ninja
+Found ninja-1.11.1 at /usr/bin/ninja
 Running compile:
-Working directory:  /tmp/tmpdds3rgo8
-Command line:  c++ /tmp/tmpdds3rgo8/testfile.cpp -o /tmp/tmpdds3rgo8/output.obj -pipe -D_FILE_OFFSET_BITS=64 -c -std=c++17 
+Working directory:  /tmp/tmppfqn22uc
+Command line:  c++ /tmp/tmppfqn22uc/testfile.cpp -o /tmp/tmppfqn22uc/output.obj -D_FILE_OFFSET_BITS=64 -c -std=c++17 
 
 Code:
  int i = static_cast<int>(0);
@@ -94,16 +191,4 @@ Compiler stdout:
 Compiler stderr:
  
 Compiler accepts -std=c++17: YES
-Running compile:
-Working directory:  /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpomiaf84_
-Command line:  c++ /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpomiaf84_/testfile.cpp -o /home/mayank02/Documents/proj/Backup_utility/build/meson-private/tmpomiaf84_/output.obj -pipe -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
-
-Code:
- 
-Compiler stdout:
- install: /usr/lib/gcc/x86_64-linux-gnu/9/
-programs: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/
-libraries: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/9/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/9/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-
-Compiler stderr:
- 
+WARNING: Running the setup command as `meson [options]` instead of `meson setup [options]` is ambiguous and deprecated.

@@ -1,1 +1,1 @@
-[{"name": "boost", "version": "1.71", "compile_args": [], "link_args": ["-lboost_filesystem"]}]
+[{"name": "boost", "version": "1.81.0", "compile_args": ["-I/usr/include", "-DBOOST_FILESYSTEM_DYN_LINK=1", "-DBOOST_ALL_NO_LIB"], "link_args": ["/usr/lib/libboost_filesystem.so.1.81.0"]}]
