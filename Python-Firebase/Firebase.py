@@ -13,7 +13,7 @@ def fill_details():
         print(attr)
         data[attr]=input()
     jsonString = json.dumps(data)
-    jsonFile = open(Path+"Config.json", "w")
+    jsonFile = open(Path+"/Config.json", "w")
     jsonFile.write(jsonString)
     jsonFile.close()
     print("Now Copy the AccountKey file into the Firebase folder")
