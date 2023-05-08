@@ -17,7 +17,7 @@ class dir_struct
 {   
     dir_struct*                 prev_version;
     intmax_t                    dir_size;
-
+    logger                      *log;
     vector <file_data>          files;
     path                        loc;
 
@@ -30,7 +30,7 @@ class dir_struct
 
     public:
 
-    dir_struct (fs::path dir);
+    dir_struct                  (fs::path dir, logger *log);
     
     intmax_t                    get_dir_size ();
     void                        save_files ();

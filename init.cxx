@@ -3,7 +3,7 @@
 
 
 bool 
-init_dir_i (char* dir2, logger *new_instance)
+init_dir_i (string dir2, logger *new_instance)
 {
     bool            success;
     success = true;
@@ -11,7 +11,8 @@ init_dir_i (char* dir2, logger *new_instance)
     // fs::path parent_loc = dir1;
     // success = success & fs::create_directories (dir1);
     
-    dir_struct dir = dir_struct(dir2, new_instance);
+    path p(dir2);
+    dir_struct dir = dir_struct(p, new_instance);
 
     for (auto it: dir.get_files())
     {

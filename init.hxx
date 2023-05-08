@@ -7,4 +7,4 @@
 
 using namespace std;
 
-bool init_dir_i (char* dir,logger* new_instance);
+bool init_dir_i (string dir, logger* new_instance);

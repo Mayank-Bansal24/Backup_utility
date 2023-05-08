@@ -6,6 +6,15 @@
 using namespace std;
 namespace fs = boost::filesystem;
 
+enum status_flags
+{
+    DEBUG,
+    ERROR,
+    INFORMATION,
+    WARNING,
+    
+};
+
 class logger{
     string flag_req;
     ofstream log_file;

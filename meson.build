@@ -12,7 +12,8 @@ executable ('backup_util',
 		'file.cxx',
 		'dir_struct.cxx',
 		'log.cxx',
-		dependencies : [boost_dep, libarch_dep])
+		dependencies : [boost_dep, libarch_dep],
+		cpp_args :['-g'])
 
 	    
 

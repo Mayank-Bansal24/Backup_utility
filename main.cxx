@@ -1,7 +1,4 @@
 #include "main.hxx"
-#include "init.hxx"
-
-namespace fs = boost::filesystem;
 
 void find_path(const std::string& file, std::vector<std::string>& path) {
     // implementation of git add function
@@ -13,6 +10,16 @@ void find_path(const std::string& file, std::vector<std::string>& path) {
     } else {
         std::cout << "File not found: " << file << std::endl;
     }
+}
+
+vector<string> process_args (int argc, char* argv[])
+{   
+    vector <string> args;
+
+    for(int i = 0; i < argc; i++)
+        args.push_back (argv[i]);
+    
+    return args;
 }
 
 void execute_command(int argc, char* argv[]) {
@@ -41,9 +48,24 @@ void execute_command(int argc, char* argv[]) {
     }
 }
 
+
 int main(int argc, char* argv[]) {
-    // execute_command(argc, argv);
-    bool status = init_dir(argv[1]);
+    /* Create a Directory to store required files*/
+    vector<string> args; 
+    logger         *log;
+
+    args =  process_args(argc, argv);
+    /* Initializing logger */
+    log = new logger();
+    log->set_flags(args[2]);
+    
+    /* Checking if the path is provided or not*/
+    if (argc < 2 )
+    {
+        cout << "Please provide the path for the directory to be in backup!!" << "\n";
+        log->print ("Please provide the path for the directory to be in backup!!", ERROR);
+    }
+    bool status = init_dir_i(args[1], log);
     
     return status;
 }

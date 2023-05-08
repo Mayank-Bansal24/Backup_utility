@@ -1,13 +1,14 @@
 #include "dir_struct.hxx"
 #include <fstream>
-#include "main.hxx"
+// #include "main.hxx"
 
-void dir_struct :: add_file (path p)
+void dir_struct :: add_file (fs::path p,
+                             vector<file_data> &files)
 {
   file_data*      new_file;
 
   new_file = new file_data (p);
-  this->files.push_back (*new_file);
+  files.push_back (*new_file);
 
   return;
 }
@@ -27,17 +28,19 @@ vector<file_data> dir_struct:: get_files()
   return this->files;
 }
 
-void dir_struct :: get_files_from_dir (path p)
+void dir_struct :: get_files_from_dir_h (fs::path p, 
+                                         vector<file_data> &files)
 {
-   vec v;                                             
-   
+   vec          v;
+
    copy (directory_iterator(p), directory_iterator(), back_inserter(v));
+
    for (vec::const_iterator it(v.begin()), it_end(v.end()); it != it_end; ++it)
    {
      if (is_regular_file (*it))
-       add_file (*it);
+        add_file (*it, files);
      else 
-       get_files_from_dir(*it);
+        get_files_from_dir_h (*it, files);
    }
 
   return;
@@ -129,8 +132,19 @@ void dir_struct:: load_files ()
     archive_read_free(a);
 }
 
-dir_struct :: dir_struct (path p, logger* new_instance)
+vector <file_data> dir_struct::get_files_from_dir (fs::path p)
 {
+  vector <file_data>               vec_files;
+
+  get_files_from_dir_h (p, vec_files);
+
+  return vec_files;  
+}
+
+dir_struct :: dir_struct (fs::path p, logger* log)
+{
+  this->loc = p;
+  this->log = log;
   try
   {
     
@@ -138,22 +152,22 @@ dir_struct :: dir_struct (path p, logger* new_instance)
     {
       if (is_regular_file(p))        
         {
-          new_instance->print("Path must be a directory not a file.\n",'e');
+          log->print("Path must be a directory not a file.\n",'e');
           cout << "Path must be a directory not a file.\n" << '\n';   
         }  
       else if (is_directory (p))      
         {
-          get_files_from_dir (p);
+          this->files = get_files_from_dir (p);
           this->dir_size  = get_dir_size();
         }
       else{
-        new_instance->print(p.string()+" exists, but is not a directory\n",'e');
+        log->print(p.string()+" exists, but is not a directory\n",'e');
         cout << p << " exists, but is not a directory\n";
       }
         
     }
     else{
-      new_instance->print(p.string()+"Path does not exist\n",'e');
+      log->print(p.string()+"Path does not exist\n",'e');
       cout << p << "Path does not exist\n";
     }
       
