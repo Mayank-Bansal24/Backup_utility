@@ -5,7 +5,7 @@ import json
 Path =os.path.dirname(__file__)
 
 def fill_details():
-  attribute=["apiKey","authDomain","projectId0","storageBucket","messagingSenderId","appId","measurementId","databaseURL"]
+  attribute=["apiKey","authDomain","projectId","storageBucket","messagingSenderId","appId","measurementId","databaseURL"]
   data=dict()
   print("Enter the following details:")
   try:
