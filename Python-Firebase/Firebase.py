@@ -142,10 +142,10 @@ elif(cmd=="upload_file"):
   upload_file(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
 elif(cmd=="delete_file"):
   upload_file(sys.argv[2],sys.argv[3])
-elif(cmd=="upload_file"):
-  upload_file(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
-elif(cmd=="upload_file"):
-  upload_file(sys.argv[2],sys.argv[3])
+elif(cmd=="download_file"):
+  download_file(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
+elif(cmd=="geturl"):
+  geturl(sys.argv[2],sys.argv[3])
 
 # print(sys.argv[i], end = " ")
 #      
