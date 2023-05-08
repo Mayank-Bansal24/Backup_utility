@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <boost/filesystem.hpp>
+#include <Python-Firebase/remote_util.hxx>
 
 #include "init.hxx"
 #include "dir_struct.hxx"

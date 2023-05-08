@@ -1,5 +1,4 @@
 #include "main.hxx"
-
 void find_path(const std::string& file, std::vector<std::string>& path) {
     // implementation of git add function
     std::cout << "Finding path of file: " << file << std::endl;
@@ -78,6 +77,9 @@ int main(int argc, char* argv[]) {
             Remote repo  
             Create Directory for Firebase content
             */
+            vector<string> ag;
+            ag.push_back("fill_details");
+            remoteutil(1,ag);
             fs::create_directories(".backup_util/firebase"); 
             /*
             Empty prev_version file

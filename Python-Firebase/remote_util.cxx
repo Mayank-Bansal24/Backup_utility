@@ -1,18 +1,22 @@
 #include "remote_util.hxx"
 
-int remoteutil(int argc,char* argv[]) {
+int remoteutil(int argc, vector<string> argv) {
     pid_t pid = fork();
     if (pid == -1) {
         std::cerr << "Failed to fork process" << std::endl;
         return 1;
     } else if (pid == 0) {
     char* command = "python3";
-    char* argument_list[10] = {"python3", "Firebase.py"};
+    char* proc_args[10];
+    vector<string> argument_list;
+    proc_args[0] = "python3";
+    proc_args[1] = "Firebase.py";
     for(int i=1;i<argc;i++){
-        argument_list[i+1]=argv[i];
+        string n=argv[i];
+        proc_args[i+1] = &n[0];
     }
 
-    int status_code = execvp(command, argument_list);
+    int status_code = execvp(command,proc_args);
 
     if (status_code == -1) {
         printf("Process did not terminate correctly\n");

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdio.h>
+#include <cstring>
+#include <bits/stdc++.h>
 #include <unistd.h>
 #include <iostream>
 #include <sys/wait.h>
@@ -9,4 +11,4 @@
 
 using namespace std;
 
-int remoteutil(int args,char* argv[]);
+int remoteutil(int args,vector<string>);
