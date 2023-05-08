@@ -1,7 +1,6 @@
 #include "init.hxx"
 #include "dir_struct.hxx"
 
-namespace fs = boost::filesystem;
 
 bool 
 init_dir (char* dir2)

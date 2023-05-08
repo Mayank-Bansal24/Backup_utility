@@ -1,4 +1,5 @@
 #include "main.hxx"
+#include "init.hxx"
 
 namespace fs = boost::filesystem;
 
@@ -41,6 +42,8 @@ void execute_command(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-    execute_command(argc, argv);
-    return 0;
+    // execute_command(argc, argv);
+    bool status = init_dir(argv[1]);
+    
+    return status;
 }
