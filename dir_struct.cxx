@@ -185,5 +185,62 @@ dir_struct :: dir_struct (fs::path p, logger* log)
   return;
 }
 
+vector <file_data> dir_struct :: get_new_files ()
+{
+    map <fs::path, file_data*>              old_struct;
+    vector<file_data>                       new_files, new_struct;
 
+    new_struct = get_files_from_dir (this->loc);
+
+    for (auto &it:this->files)
+      old_struct [it.get_path()] = &it;
+
+    for(auto it:new_struct)
+    {
+      if (old_struct[it.get_path()] == NULL)
+        new_files.push_back(it);
+    }
+
+    return new_files;  
+}
+
+vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
+{
+  file_data*                          old_file = NULL;
+  vector <file_data>                  mod_files, new_files;
+  map <fs::path, file_data>           mp;
+
+  for(auto it: this->files)
+    mp[it.get_path()] = it;
+
+  for(auto it: prev_version)
+  {
+    *old_file = mp[it.get_path()];
+
+    if (old_file == NULL)
+      {
+          old_file->set_status (DELETED);
+          mod_files.push_back (*old_file);
+      }
+    else if (mp[it.get_path ()].get_last_mod_time () > it.get_last_mod_time ())
+      {
+          old_file->set_status (MODIFIED);
+          mod_files.push_back (*old_file);
+      }
+  }
+
+  new_files = get_new_files();
+
+  for (auto it:new_files)
+    mod_files.push_back (it);
+
+  return mod_files;
+}
+
+vector <file_data> dir_struct :: get_status ()
+{
+  // vector <file_data> prev = this->prev_version->get_files();
+
+  return prev;  
+}
 
