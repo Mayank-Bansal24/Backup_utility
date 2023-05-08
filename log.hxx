@@ -17,7 +17,7 @@ enum status_flags
 
 class logger{
     string flag_req;
-    ofstream log_file;
+    std::ofstream log_file;
     logger(const logger&);
     logger& operator=(const logger&);
     

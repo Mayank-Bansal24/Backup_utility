@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
     args =  process_args(argc, argv);
     /* Initializing logger */
     log = new logger();
-    log->set_flags(args[2]);
+    // log->set_flags(args[2]);
     
     /* Checking if the path is provided or not*/
     if (argc < 2 )

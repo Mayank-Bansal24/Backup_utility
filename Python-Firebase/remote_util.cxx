@@ -1,10 +1,6 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <iostream>
-#include <sys/wait.h>
-#include <filesystem>
+#include "remote_util.hxx"
 
-int main(int argc,char* argv[]) {
+int remoteutil(int argc,char* argv[]) {
     pid_t pid = fork();
     if (pid == -1) {
         std::cerr << "Failed to fork process" << std::endl;
