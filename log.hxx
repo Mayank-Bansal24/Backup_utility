@@ -8,10 +8,11 @@ namespace fs = boost::filesystem;
 
 enum status_flags
 {
-    DEBUG,
     ERROR,
-    INFORMATION,
     WARNING,
+    DEBUG,
+    INFORMATION,
+    
 };
 
 class logger{
@@ -26,6 +27,6 @@ class logger{
     // logger(string filename,string flag_req);
     void set_flags(string z);
     void close_p ();
-    void print(string s,char c);
+    void print(string s,int type);
 };
 

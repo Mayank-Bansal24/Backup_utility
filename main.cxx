@@ -144,6 +144,17 @@ int remoteutil(int argc, vector<string> argv) {
 
     return 0;
 }
+void backup_util::set_author_name(string s){
+    this->author=s;
+    return;
+}
+
+
+void backup_util::set_project_name(string s){
+    project=s;
+    return;
+}
+
 
 int main(int argc, char* argv[]) {
     /* Create a Directory to store required files*/
@@ -163,6 +174,7 @@ int main(int argc, char* argv[]) {
         log->print ("Please provide the path for the directory to be in backup!!", ERROR);
         /* Show help page along with steps to run it */
     }
+<<<<<<< HEAD
     // backup_util* instance = new backup_util();
 
 
@@ -187,6 +199,16 @@ int main(int argc, char* argv[]) {
     } 
 
    
+=======
+    else{
+        std::string author_name, project_name;
+        std::cout << "Enter author name: ";
+        std::getline(std::cin, author_name);
+        std::cout << "Enter project name: ";
+        std::getline(std::cin, project_name);
+    }
+    bool status = init_dir_i(args[1], log);
+>>>>>>> d025040 (Added Attriutes and updated logger)
     
     return 0;
 }

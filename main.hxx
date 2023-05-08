@@ -27,4 +27,10 @@ class backup_util {
     public:
     backup_util             (fs::path loc, logger* log);
     vector<dir_struct>      get_prev_version (string version_no);
+    string                  project;
+        
+    public:
+    backup_util             ();
+    void set_author_name(string s);
+    void set_project_name(string s);
 };
