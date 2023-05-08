@@ -12,7 +12,6 @@ enum status_flags
     ERROR,
     INFORMATION,
     WARNING,
-    
 };
 
 class logger{

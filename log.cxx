@@ -10,6 +10,7 @@ void logger::set_flags(string s)
 void logger::close_p (){
     log_file.close();
 }
+
 void logger::print(string info,char type){
     time_t tmNow;
     tmNow = time(NULL);

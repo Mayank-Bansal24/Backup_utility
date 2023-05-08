@@ -49,22 +49,42 @@ void execute_command(int argc, char* argv[]) {
 }
 
 
+
 int main(int argc, char* argv[]) {
     /* Create a Directory to store required files*/
     vector<string> args; 
     logger         *log;
 
+    backup_util* instance = new backup_util();
+
     args =  process_args(argc, argv);
     /* Initializing logger */
     log = new logger();
-    // log->set_flags(args[2]);
+    // log->set_flags(args[2]);   /// TO be fixed
     
     /* Checking if the path is provided or not*/
     if (argc < 2 )
     {
         cout << "Please provide the path for the directory to be in backup!!" << "\n";
         log->print ("Please provide the path for the directory to be in backup!!", ERROR);
+        /* Show help page along with steps to run it */
     }
+
+    if (args[1] == "init")
+    {
+        /* Script to config project
+            Author Name
+            Proj_Name
+            Remote repo  
+            Create Directory for Firebase content
+            */
+            fs::create_directories(".backup_util/firebase"); 
+            /*
+            Empty prev_version file
+            Cur_version file
+        */
+    } 
+
     bool status = init_dir_i(args[1], log);
     
     return status;
