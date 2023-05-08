@@ -5,6 +5,7 @@
 #include "file.hxx"
 #include <archive.h>
 #include <archive_entry.h>
+#include "log.hxx"
 
 namespace fs = boost::filesystem;
 using namespace std;
