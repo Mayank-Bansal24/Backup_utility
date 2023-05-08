@@ -1,5 +1,7 @@
 #include <boost/filesystem/operations.hpp>
 #include "dir_struct.hxx"
+#include<fstream>
+#include "main.hxx"
 
 void dir_struct :: add_file (fs::path p,
                              vector<file_data> &files)
@@ -45,6 +47,7 @@ void dir_struct :: get_files_from_dir_h (fs::path p,
   return;
 }
 
+<<<<<<< HEAD
 void dir_struct:: save_files ()
 {
   
@@ -131,7 +134,14 @@ void dir_struct:: load_files ()
     archive_read_free(a);
 }
 
+<<<<<<< HEAD
 vector <file_data> dir_struct::get_files_from_dir (fs::path p)
+=======
+dir_struct :: dir_struct (path p)
+=======
+dir_struct :: dir_struct (path p, logger* new_instance)
+>>>>>>> 36f9f67 (Added log functionality)
+>>>>>>> 12cee84 (Added log functionality)
 {
   vector <file_data>               vec_files;
 
@@ -146,22 +156,39 @@ dir_struct :: dir_struct (fs::path p)
 
   try
   {
+    
     if (exists(p))    
     {
       if (is_regular_file(p))        
         {
+<<<<<<< HEAD
           cout << "fs::path must be a directory not a file.\n" << '\n';   
+=======
+          new_instance->print("Path must be a directory not a file.\n",'e');
+          cout << "Path must be a directory not a file.\n" << '\n';   
+>>>>>>> 12cee84 (Added log functionality)
         }  
       else if (is_directory (p))      
         {
           this->files = get_files_from_dir (p);
           this->dir_size  = get_dir_size();
         }
-      else
+      else{
+        new_instance->print(p.string()+" exists, but is not a directory\n",'e');
         cout << p << " exists, but is not a directory\n";
+      }
+        
     }
+<<<<<<< HEAD
     else
       cout << p << "fs::path does not exist\n";
+=======
+    else{
+      new_instance->print(p.string()+"Path does not exist\n",'e');
+      cout << p << "Path does not exist\n";
+    }
+      
+>>>>>>> 12cee84 (Added log functionality)
   }
 
   catch (const filesystem_error& ex)

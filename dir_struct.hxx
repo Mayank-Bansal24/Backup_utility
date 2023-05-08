@@ -16,6 +16,7 @@ class dir_struct
 {   
     dir_struct*                 prev_version;
     intmax_t                    dir_size;
+
     vector <file_data>          files;
     path                        loc;
 

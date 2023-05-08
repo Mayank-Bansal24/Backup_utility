@@ -11,4 +11,9 @@ executable ('backup_util',
 		'init.cxx',
 		'file.cxx',
 		'dir_struct.cxx',
-	     dependencies : [boost_dep, libarch_dep])
+		'log.cxx',
+		dependencies : [boost_dep, libarch_dep])
+
+	    
+
+

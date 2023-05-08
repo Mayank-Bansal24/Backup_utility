@@ -19,7 +19,6 @@ class file_data {
     path                loc;                    /* Returns the path of the file */
     int                 status;                 /* status of the file*/
     time_t              last_mod_time;          /* for storing last modified time of the files */
-
     public:
     
     file_data           ();                     /* Default constructor*/
