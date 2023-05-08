@@ -1,4 +1,5 @@
 #include "main.hxx"
+
 void find_path(const std::string& file, std::vector<std::string>& path) {
     // implementation of git add function
     std::cout << "Finding path of file: " << file << std::endl;
@@ -47,18 +48,26 @@ void execute_command(int argc, char* argv[]) {
     }
 }
 
+backup_util :: backup_util (fs::path loc, logger* log)
+{
+    dir_struct          *new_dir;
 
+    this->loc = loc;
+
+    new_dir = new dir_struct (loc, log);
+    this->curr_status = *new_dir;
+    return;
+}
 
 int main(int argc, char* argv[]) {
     /* Create a Directory to store required files*/
     vector<string> args; 
     logger         *log;
 
-    backup_util* instance = new backup_util();
+    log = new logger();
 
     args =  process_args(argc, argv);
     /* Initializing logger */
-    log = new logger();
     // log->set_flags(args[2]);   /// TO be fixed
     
     /* Checking if the path is provided or not*/
@@ -68,6 +77,8 @@ int main(int argc, char* argv[]) {
         log->print ("Please provide the path for the directory to be in backup!!", ERROR);
         /* Show help page along with steps to run it */
     }
+    // backup_util* instance = new backup_util();
+
 
     if (args[1] == "init")
     {
@@ -75,19 +86,20 @@ int main(int argc, char* argv[]) {
             Author Name
             Proj_Name
             Remote repo  
-            Create Directory for Firebase content
             */
             vector<string> ag;
             ag.push_back("fill_details");
             remoteutil(1,ag);
             fs::create_directories(".backup_util/firebase"); 
+            bool status = init_dir_i(args[2], log);
+
             /*
             Empty prev_version file
             Cur_version file
         */
     } 
 
-    bool status = init_dir_i(args[1], log);
+   
     
-    return status;
+    return 0;
 }

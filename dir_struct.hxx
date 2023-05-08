@@ -15,7 +15,6 @@ typedef vector <fs::path> vec;
 
 class dir_struct
 {   
-    dir_struct*                 prev_version;
     intmax_t                    dir_size;
     logger                      *log;
     vector <file_data>          files;
@@ -29,7 +28,7 @@ class dir_struct
     vector <file_data>          get_new_files ();  
 
     public:
-
+    dir_struct                  ();
     dir_struct                  (fs::path dir, logger *log);
     
     intmax_t                    get_dir_size ();

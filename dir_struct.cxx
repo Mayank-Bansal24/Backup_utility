@@ -140,6 +140,10 @@ vector <file_data> dir_struct::get_files_from_dir (fs::path p)
 
   return vec_files;  
 }
+dir_struct :: dir_struct ()
+{
+
+}
 
 dir_struct :: dir_struct (fs::path p, logger* log)
 {

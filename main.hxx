@@ -1,10 +1,11 @@
 #pragma once
 #include <iostream>
 #include <boost/filesystem.hpp>
-#include <Python-Firebase/remote_util.hxx>
+#include "Python-Firebase/remote_util.hxx"
 
 #include "init.hxx"
 #include "dir_struct.hxx"
+#include "log.hxx"
 
 namespace fs = boost::filesystem;
 using namespace std;
@@ -14,8 +15,9 @@ class backup_util {
     vector <dir_struct>     version_list;
     dir_struct              curr_status;
     string                  author;
+    fs::path                loc;              
         
     public:
-    backup_util             ();
+    backup_util             (fs::path loc, logger* log);
     vector<dir_struct>      get_prev_version (string version_no);
 };
