@@ -142,7 +142,9 @@ vector <file_data> dir_struct::get_files_from_dir (fs::path p)
 }
 dir_struct :: dir_struct ()
 {
-
+  this->loc = "";
+  this->log = nullptr;
+  this->dir_size = 0;
 }
 
 dir_struct :: dir_struct (fs::path p, logger* log)
@@ -270,6 +272,6 @@ dir_struct :: dir_struct (json obj)
 
   for(auto it: obj["files"])
     this->files.push_back(file_data(it));
-  
+
   return;
 }

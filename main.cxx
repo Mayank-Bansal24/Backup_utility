@@ -19,7 +19,7 @@ backup_util :: backup_util (fs::path loc, logger* log)
 
     new_dir = new dir_struct (loc, log);
     this->curr_status = *new_dir;
-    this->version_list.push_back (*new_dir);
+
     return;
 }
 
@@ -197,8 +197,11 @@ bool backup_util :: init (vector<string> &args)
         string author_name, project_name;
         cout << "Enter author name: ";
         getline(std::cin, author_name);
+        this->set_author_name(author_name);
+
         cout << "Enter project name: ";
         getline(std::cin, project_name);
+        this->set_project_name(project_name);
 
         vector<string> ag;
         ag.push_back("fill_details");
@@ -211,7 +214,12 @@ bool backup_util :: init (vector<string> &args)
 
         bool status = init_dir_i(args[2], log);
 
-        
+        dir_struct *empty_dir = new dir_struct ();
+        this->version_list = { *empty_dir };
+
+        this->dump_backup_util("./state.json");
+
+
     return true;
 }
 
@@ -238,7 +246,7 @@ void backup_util :: dump_backup_util (fs::path p)
     return;
 }
 
-backup_util :: backup_util (fs:: path p)
+void backup_util :: load_backup_util (fs:: path p)
 {
     // read json from given path
     std::ifstream ifs(p.string());

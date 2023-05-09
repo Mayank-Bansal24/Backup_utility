@@ -39,12 +39,12 @@ public:
     dir_struct              get_last_dir_struct ();
     void                    set_author_name(string s);
     void                    set_project_name(string s);
-    backup_util             (fs::path p);
     bool                    add    ();
     bool                    commit ();
     bool                    restore();
     int                     remoteutil (int argc, vector<string> argv);
     vector<dir_struct>      get_prev_version (string version_no);
     void                    dump_backup_util (fs::path p);
+    void                    load_backup_util (fs::path p);
         
 };
