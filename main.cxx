@@ -133,6 +133,40 @@ bool backup_util :: status (dir_struct  last_ver)
 
     
     vector<file_data> mod_files = curr_status->get_mod_files(last_ver.get_files());
+    vector<file_data> add_file;
+    vector<file_data> mod_file;
+    vector<file_data> del_file;
+
+    for (file_data ele:mod_files){
+        int k=ele.get_status();
+        if(k==0){
+            add_file.push_back(ele);
+        }
+        else if(k==1){
+            mod_file.push_back(ele);
+        }
+        else{
+            del_file.push_back(ele);
+        }
+        if(add_file.size()){
+            cout<<"These are newly added files\n";
+            for (auto ele:add_file){
+                cout<<ele.get_path()<<"\n";
+            }
+        }
+        if(mod_file.size()){
+            cout<<"These files are modified use add command to commit\n";
+            for (auto ele:add_file){
+                cout<<ele.get_path()<<"\n";
+            }
+        }
+        if(del_file.size()){
+            cout<<"These files are deleted\n";
+            for (auto ele:add_file){
+                cout<<ele.get_path()<<"\n";
+            }
+        }
+    }
     
     // Display files changes
 

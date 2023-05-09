@@ -8,7 +8,6 @@ using json = nlohmann::json;
 
 
 enum file_status {
-    INIT,
     ADDED,
     MODIFIED,
     DELETED
@@ -33,4 +32,5 @@ class file_data {
     time_t              get_last_mod_time ();   /* Returns the last modified time */
     void                get_updated ();         /* Updates the data of the file */
     void                set_status (int status);           /* Sets status of the file */
+    int                 get_status();
 };
