@@ -1,6 +1,5 @@
 #include "file.hxx"
 #include <system_error>
-namespace fs = boost::filesystem;
 
 /* Default constructor*/
 file_data :: file_data()
@@ -9,12 +8,12 @@ file_data :: file_data()
     this->file_size = 0;
     this->status = -1;
     this->last_mod_time = time(0);
-    this->loc = path ("./");
+    this->loc = fs::path ("./");
     return;
 }
 
 /* Parameterized constructor */
-file_data   ::  file_data (path loc)
+file_data   ::  file_data (fs::path loc)
 {
     std::error_code             ec;
     
@@ -39,13 +38,13 @@ file_data   ::  file_data (path loc)
 }
 
 /* Constructor that loads data from json */
-file_data :: file_data (json obj)
+file_data :: file_data (json obj, int x)
 {
     this->empty = obj["empty"];
     this->file_size = obj["file_size"];
     this->status = obj["status"];
     this->last_mod_time = obj["last_mod_time"];
-    this->loc = (string)obj["path"];
+    this->loc = fs::path ((string)obj["path"]);
     return;
 }
 
@@ -69,7 +68,7 @@ intmax_t file_data :: get_file_size ()
 }
 
 /* Returns the path of the object */
-path file_data :: get_path ()
+fs::path file_data :: get_path ()
 {
     return this->loc;
 }

@@ -12,6 +12,7 @@ executable ('backup_util',
 		'file.cxx',
 		'dir_struct.cxx',
 		'log.cxx',
+		'json.hxx',
 		dependencies : [boost_dep, libarch_dep],
 		cpp_args :['-g'])
 

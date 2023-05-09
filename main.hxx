@@ -35,7 +35,6 @@ public:
     public:
     backup_util             (fs::path loc, logger* log);
     bool                    status (dir_struct last_ver);
-    backup_util             (fs::path p);
     bool                    add    (dir_struct last_ver);
     bool                    commit (dir_struct last_ver);
     bool                    restore ();

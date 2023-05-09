@@ -19,7 +19,24 @@ backup_util :: backup_util (fs::path loc, logger* log)
 
     new_dir = new dir_struct (loc, log);
     this->curr_status = *new_dir;
+<<<<<<< HEAD
 
+=======
+    this->version_list.push_back (*new_dir);
+
+    std::ifstream ifs(loc.string());
+    json obj = json::parse(ifs); 
+    this->author_name = obj["author_name"];
+    this->loc = (string)obj["loc"];
+    this->project_name = obj["project_name"];
+    this->version_list = vector<dir_struct> ();
+
+    for (auto it : obj["version_list"])
+    {
+        dir_struct dir(it);
+        this->version_list.push_back(dir);
+    }
+>>>>>>> f30a8dc (Removed redundant constructor)
     return;
 }
 
@@ -266,6 +283,7 @@ void backup_util :: dump_backup_util (fs::path p)
     return;
 }
 
+<<<<<<< HEAD
 void backup_util :: load_backup_util (fs:: path p)
 {
     // read json from given path
@@ -284,6 +302,8 @@ void backup_util :: load_backup_util (fs:: path p)
 
     return;
 }
+=======
+>>>>>>> f30a8dc (Removed redundant constructor)
 
 int main(int argc, char* argv[]) {
     /* Create a Directory to store required files*/

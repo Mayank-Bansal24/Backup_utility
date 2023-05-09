@@ -1,6 +1,6 @@
 #include "dir_struct.hxx"
+#include "json.hxx"
 #include <fstream>
-// #include "main.hxx"
 
 void dir_struct :: add_file (fs::path p,
                              vector<file_data> &files)
@@ -33,7 +33,7 @@ void dir_struct :: get_files_from_dir_h (fs::path p,
 {
    vec          v;
 
-   copy (directory_iterator(p), directory_iterator(), back_inserter(v));
+   copy (fs::directory_iterator(p), fs::directory_iterator(), back_inserter(v));
 
    for (vec::const_iterator it(v.begin()), it_end(v.end()); it != it_end; ++it)
    {
@@ -179,7 +179,7 @@ dir_struct :: dir_struct (fs::path p, logger* log)
       
   }
 
-  catch (const filesystem_error& ex)
+  catch (const fs::filesystem_error& ex)
   {
     cout << ex.what() << '\n';
   }
@@ -242,12 +242,12 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
   return mod_files;
 }
 
-vector <file_data> dir_struct :: get_status ()
-{
-  // vector <file_data> prev = this->prev_version->get_files();
+// vector <file_data> dir_struct :: get_status ()
+// {
+//   // vector <file_data> prev = this->prev_version->get_files();
 
-  // return prev;  
-}
+//   // return prev;  
+// }
 
 json dir_struct::dump_dir_struct ()
 {
@@ -267,11 +267,12 @@ json dir_struct::dump_dir_struct ()
 dir_struct :: dir_struct (json obj)
 {
   this->dir_size = obj["dir_size"];
-  this->loc = (string)obj["loc"];
+  this->loc = (string) obj["loc"];
   this->files = vector <file_data> ();
 
   for(auto it: obj["files"])
-    this->files.push_back(file_data(it));
-
+    {
+      this->files.push_back(file_data(it, 0));
+    }
   return;
 }

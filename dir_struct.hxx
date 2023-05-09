@@ -21,7 +21,7 @@ class dir_struct
     logger                      *log;
     vector <file_data>          files,
                                 mod_files;
-    path                        loc;
+    fs::path                        loc;
 
 
     void                        get_files_from_dir_h (fs::path p,
