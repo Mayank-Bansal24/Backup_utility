@@ -17,7 +17,8 @@ class dir_struct
 {   
     intmax_t                    dir_size;
     logger                      *log;
-    vector <file_data>          files;
+    vector <file_data>          files,
+                                mod_files;
     path                        loc;
 
 

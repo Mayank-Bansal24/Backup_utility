@@ -232,8 +232,11 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
   new_files = get_new_files();
 
   for (auto it:new_files)
-    mod_files.push_back (it);
-
+    {
+     it.set_status(ADDED);
+      mod_files.push_back (it);
+    }
+    
   return mod_files;
 }
 

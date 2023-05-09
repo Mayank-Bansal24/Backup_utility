@@ -21,22 +21,22 @@ class backup_util {
 
     vector <dir_struct>     version_list;
     dir_struct              curr_status;
-    string                  author;
-    fs::path                loc;              
+    string                  author_name;
+    string                  project_name;
+    fs::path                loc;
+    logger*                 log;              
         
     public:
     backup_util             (fs::path loc, logger* log);
-    bool                    status ();
+    bool                    status (dir_struct last_ver);
     bool                    add    ();
     bool                    commit ();
     bool                    restore();
-    bool                    init   ();
+    bool                    init   (vector<string> &args);
     int                     remoteutil (int argc, vector<string> argv);
     vector<dir_struct>      get_prev_version (string version_no);
-    string                  project;
+    dir_struct              get_last_dir_struct ();
+    void                    set_author_name(string s);
+    void                    set_project_name(string s);
         
-    public:
-    backup_util             ();
-    void set_author_name(string s);
-    void set_project_name(string s);
 };

@@ -1,4 +1,5 @@
 #include "main.hxx"
+#include "log.hxx"
 
 vector<string> process_args (int argc, char* argv[])
 {   
@@ -109,27 +110,33 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
 
     return 0;
 }
-void backup_util::set_author_name(string s){
-    this->author=s;
+void backup_util::set_author_name (string s){
+    this->author_name = s;
     return;
 }
 
 
-void backup_util::set_project_name(string s){
-    project=s;
+void backup_util::set_project_name (string s){
+    project_name = s;
     return;
 }
-
 
 bool backup_util :: add (void)
 {
     return true;
 }
 
-bool backup_util :: status (void)
+bool backup_util :: status (dir_struct  last_ver)
 {
-    return true;
+    dir_struct* curr_status = new dir_struct (loc, log);
+
     
+    vector<file_data> mod_files = curr_status->get_mod_files(last_ver.get_files());
+    
+    // Display files changes
+
+    /* Return if true if everything happen happily*/
+    return true;
 }
 
 bool backup_util :: commit (void)
@@ -144,22 +151,38 @@ bool backup_util :: restore (void)
     
 }
 
-bool backup_util :: init (void)
+bool backup_util :: init (vector<string> &args)
 {
-    return true;
+        string author_name, project_name;
+        cout << "Enter author name: ";
+        getline(std::cin, author_name);
+        cout << "Enter project name: ";
+        getline(std::cin, project_name);
 
+        vector<string> ag;
+        ag.push_back("fill_details");
+        // remoteutil(1,ag);
+        fs::create_directories(".backup_util/firebase"); 
+
+        bool status = init_dir_i(args[2], log);
+
+        
+    return true;
 }
 
+dir_struct backup_util :: get_last_dir_struct()
+{
+    return this->version_list.back();
+}
 
 int main(int argc, char* argv[]) {
     /* Create a Directory to store required files*/
-    vector<string> args; 
-    logger         *log;
-
+    vector<string>      args; 
+    logger              *log;
+    bool                status;
     log = new logger();
 
     args =  process_args(argc, argv);
-    /* Initializing logger */
     // log->set_flags(args[2]);   /// TO be fixed
     
     /* Checking if the path is provided or not*/
@@ -169,38 +192,40 @@ int main(int argc, char* argv[]) {
         log->print ("Please provide the path for the directory to be in backup!!", ERROR);
         /* Show help page along with steps to run it */
     }
-    // backup_util* instance = new backup_util();
-
+    
+    backup_util* instance = new backup_util (args[2], log);
+    /* Load File here*/
+    backup_util* last_instance;
 
     if (args[1] == "init")
     {
-        /* Script to config project
-            Author Name
-            Proj_Name
-            Remote repo  
-            */
-            vector<string> ag;
-            ag.push_back("fill_details");
-            // remoteutil(1,ag);
-            fs::create_directories(".backup_util/firebase"); 
-
-            bool status = init_dir_i(args[2], log);
-
-            /*
-            Empty prev_version file
-            Cur_version file
-        */
+        log->print ("Running init call on dir" + args[2] + ".", INFORMATION);
+        status = status & instance->init (args);
+        log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
     } 
+    else if (args[1] == "add")
+    {
 
-   
-    else{
-        std::string author_name, project_name;
-        std::cout << "Enter author name: ";
-        std::getline(std::cin, author_name);
-        std::cout << "Enter project name: ";
-        std::getline(std::cin, project_name);
     }
-    bool status = init_dir_i(args[1], log);
-    
+    else if (args[1] == "commit")
+    {
+
+    }
+    else if (args[1] == "restore")
+    {
+
+    }
+    else if (args[1] == "status")
+    {
+        log->print ("Running init call on dir" + args[2] + ".", INFORMATION);
+        status = status & instance->status (last_instance->get_last_dir_struct());
+        log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
+
+    }
+    else
+    {
+        /* Show Help*/
+    }
+
     return 0;
 }
