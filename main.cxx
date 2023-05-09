@@ -174,7 +174,6 @@ int main(int argc, char* argv[]) {
         log->print ("Please provide the path for the directory to be in backup!!", ERROR);
         /* Show help page along with steps to run it */
     }
-<<<<<<< HEAD
     // backup_util* instance = new backup_util();
 
 
@@ -199,7 +198,6 @@ int main(int argc, char* argv[]) {
     } 
 
    
-=======
     else{
         std::string author_name, project_name;
         std::cout << "Enter author name: ";
@@ -208,7 +206,6 @@ int main(int argc, char* argv[]) {
         std::getline(std::cin, project_name);
     }
     bool status = init_dir_i(args[1], log);
->>>>>>> d025040 (Added Attriutes and updated logger)
     
     return 0;
 }
