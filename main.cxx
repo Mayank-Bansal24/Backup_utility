@@ -26,41 +26,48 @@ backup_util :: backup_util (fs::path loc, logger* log)
 int backup_util :: remoteutil(int argc, vector<string> argv) 
 {
     
-    cout<<argc;
+    // cout<<argc;
     pid_t pid = fork();
-    if (pid == -1) {
+
+
+    if (pid == -1) 
+    {
         std::cerr << "Failed to fork process" << std::endl;
         return 1;
-    } else if (pid == 0) {
-    char* command = "python3";
-    char* proc_args[] = {"python3","../Python-Firebase/Firebase.py"};
-    for(int i=0;i<argc;i++){
-        string k=argv[i];
-        proc_args[i+2]=&k[0];
-
     }
-    proc_args[argc+2]=NULL;
-    
-    
-    int status_code = execvp(command,proc_args);
-
-    if (status_code == -1) {
-        printf("Process did not terminate correctly\n");
-    }
-        
-        return 0;
-    } else {
-        // Parent process
-       
+    else if (pid == 0) 
+    {
+        std::vector<char*> c_args;
+         c_args.push_back(const_cast<char*>("python3"));
+        c_args.push_back(const_cast<char*>("../Python-Firebase/Firebase.py"));
+        for (const auto& arg : argv) {
+            c_args.push_back(const_cast<char*>(arg.c_str()));
+        }
+    c_args.push_back(nullptr); 
+        int status_code = execvp(c_args[0], c_args.data());
+        if (status_code == -1) 
+        {
+            printf("Process did not terminate correctly\n");
+        }
+    } 
+    else 
+    {
         int status;
         wait(&status);
-        cout << "Waited for child" << '\n';
-        if (WIFEXITED(status)) {
-            if(argc==1){
+        if (WIFEXITED(status)) 
+        {
+            fs::path path("../Python-Firebase/");
+    int count = 0;
+    for (const auto& entry : fs::directory_iterator(path)) {
+        if (entry.path().extension() == ".json") {
+            count++;
+        }
+    }
+            if(argc==1 && count<2){
             pid_t pid = fork();
-    if (pid == -1) {
-        std::cerr << "Failed to fork process" << std::endl;
-        return 1;
+            if (pid == -1) {
+                std::cerr << "Failed to fork process" << std::endl;
+                return 1;
     } 
     else if (pid == 0) {
     char* command = "cp";
@@ -90,7 +97,6 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
        
         int status;
         wait(&status);
-        cout << "Waited for child" << '\n';
         if (WIFEXITED(status)) {
             
             std::cout << "Child process exited with status code " << WEXITSTATUS(status) << std::endl;
@@ -162,7 +168,11 @@ bool backup_util :: init (vector<string> &args)
 
         vector<string> ag;
         ag.push_back("fill_details");
-        // remoteutil(1,ag);
+        remoteutil(1,ag);
+        ag.clear();
+        ag.push_back("initialize");
+        ag.push_back("abc");
+        remoteutil(2,ag);
         fs::create_directories(".backup_util/firebase"); 
 
         bool status = init_dir_i(args[2], log);
@@ -189,7 +199,7 @@ void backup_util :: dump_backup_util (fs::path p)
     for (auto it : this->version_list)
         obj["version_list"].push_back(it.dump_dir_struct());
 
-    std::ofstream ofs(p);
+    std::ofstream ofs(p.string());
     ofs << std::setw(4) << obj.dump() << std::endl;
     return;
 }
@@ -197,7 +207,7 @@ void backup_util :: dump_backup_util (fs::path p)
 backup_util :: backup_util (fs:: path p)
 {
     // read json from given path
-    std::ifstream ifs(p);
+    std::ifstream ifs(p.string());
     json obj = json::parse(ifs); 
     this->author_name = obj["author_name"];
     this->loc = (string)obj["loc"];

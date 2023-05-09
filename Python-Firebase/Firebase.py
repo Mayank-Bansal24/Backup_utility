@@ -5,30 +5,41 @@ import json
 Path =os.path.dirname(__file__)
 
 def fill_details():
-  attribute=["apiKey","authDomain","projectId","storageBucket","messagingSenderId","appId","measurementId","databaseURL"]
-  data=dict()
-  print("Enter the following details:")
-  try:
-    for attr in attribute:
-        print(attr)
-        data[attr]=input()
-    jsonString = json.dumps(data)
-    jsonFile = open(Path+"/Config.json", "w")
-    jsonFile.write(jsonString)
-    jsonFile.close()
-    print("Now Copy the AccountKey file into the Firebase folder")
-  except Exception as e:
-      print(str(e))
+  flag=False
+  entries = os.listdir(Path)
+  for entry in entries:
+      if(entry=='Config.json'):
+        flag=True
+  if(flag==False):
+    attribute=["apiKey","authDomain","projectId","storageBucket","messagingSenderId","appId","measurementId","databaseURL"]
+    data=dict()
+    print("Enter the following details:")
+    try:
+      for attr in attribute:
+          print(attr)
+          data[attr]=input()
+      jsonString = json.dumps(data)
+      jsonFile = open(Path+"/Config.json", "w")
+      jsonFile.write(jsonString)
+      jsonFile.close()
+      print("Now Copy the AccountKey file into the Firebase folder")
+    except Exception as e:
+        print(str(e))
       
 def initialize_and_getconfig():
   try:
-      config=open(Path+'\Config.json',"w")
+      with open(Path+'/Config.json', 'r') as file:
+      # Load the JSON data from the file into a Python object
+          data = json.load(file)
+      # config=open(Path+'/Config.json',"w")
+      # print(config)
   except Exception as e:
       error="Config Not Present In Required Path"
       print(error)
       print(str(e))
       return error
-  data = json.load(config)
+  # data = config
+  # print(data)
   try:
     Modulejsonfile=["Config.json"]
     json_file_names = [filename for filename in os.listdir(Path) if filename.endswith('.json')]
@@ -42,6 +53,7 @@ def initialize_and_getconfig():
   if "serviceaccount" not in data.keys():
      print("Accountkey file not present in Firebase file")
   datakeys = json.dumps(data)
+  config = open(Path+"/Config.json", "w")
   config.write(datakeys)
   config.close()
   return data
@@ -70,7 +82,7 @@ def initialize(Projname):
       storage.child(Projname).put(None)
       print("Project Initialized")
     except Exception as e: 
-      error= "Connection Unsuccessful"
+      error= "Project Not Initialized"
       print(error)
       print(str(e))
       return error
@@ -131,12 +143,18 @@ def geturl(Projname,RFilename):
       print(error)
       print(str(e))
       return error
+
+# v=len(sys.argv) - 1
+
+# for i in range(v):
+#   print(sys.argv[i])
     
 cmd=sys.argv[1]
 
 if(cmd=="fill_details"):
   fill_details()
 elif(cmd=="initialize"):
+  # print(sys.argv[2])
   initialize(sys.argv[2])
 elif(cmd=="upload_file"):
   upload_file(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
@@ -146,13 +164,3 @@ elif(cmd=="download_file"):
   download_file(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
 elif(cmd=="geturl"):
   geturl(sys.argv[2],sys.argv[3])
-
-# print(sys.argv[i], end = " ")
-#      
-# # Addition of numbers
-# Sum = 0
-# # Using argparse module
-# for i in range(1, n):
-#     Sum += int(sys.argv[i])
-#      
-# print("\n\nResult:", Sum)

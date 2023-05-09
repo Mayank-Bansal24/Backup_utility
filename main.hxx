@@ -3,6 +3,10 @@
 #include <boost/filesystem.hpp>
 
 #include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <unistd.h>
 #include <cstring>
 #include <bits/stdc++.h>
 #include <unistd.h>
