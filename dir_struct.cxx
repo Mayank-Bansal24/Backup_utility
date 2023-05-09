@@ -241,6 +241,6 @@ vector <file_data> dir_struct :: get_status ()
 {
   // vector <file_data> prev = this->prev_version->get_files();
 
-  return prev;  
+  // return prev;  
 }
 

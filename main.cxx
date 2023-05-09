@@ -1,17 +1,5 @@
 #include "main.hxx"
 
-void find_path(const std::string& file, std::vector<std::string>& path) {
-    // implementation of git add function
-    std::cout << "Finding path of file: " << file << std::endl;
-    fs::path current_path = fs::current_path();
-    fs::path file_path = current_path / file;
-    if (fs::exists(file_path)) {
-        path.push_back(file_path.string());
-    } else {
-        std::cout << "File not found: " << file << std::endl;
-    }
-}
-
 vector<string> process_args (int argc, char* argv[])
 {   
     vector <string> args;
@@ -20,32 +8,6 @@ vector<string> process_args (int argc, char* argv[])
         args.push_back (argv[i]);
     
     return args;
-}
-
-void execute_command(int argc, char* argv[]) {
-    std::map<std::string, std::string> command_args;
-    int num_args_to_parse = std::min(argc - 1, 2); // only parse first two arguments
-    for (int i = 1; i <= num_args_to_parse; ++i) {
-        if (i < argc - 1) {
-            command_args[argv[i]] = argv[i + 1];
-            ++i;
-        } else {
-            command_args[argv[i]] = "";
-        }
-    }
-    std::vector<std::string> path;
-    for (const auto& arg : command_args) {
-        std::cout << "Map formed: "<<arg.first << " -> " << arg.second << std::endl;
-        if (arg.first == "path") {
-            find_path(arg.second, path);
-        }
-        else {
-            std::cout << "Unidentified function" << std::endl;
-        }
-    }
-    for (const auto& p : path) {
-        std::cout << "Path: " << p << std::endl;
-    }
 }
 
 backup_util :: backup_util (fs::path loc, logger* log)
@@ -59,7 +21,10 @@ backup_util :: backup_util (fs::path loc, logger* log)
     return;
 }
 
-int remoteutil(int argc, vector<string> argv) {
+int backup_util :: remoteutil(int argc, vector<string> argv) 
+{
+    
+    cout<<argc;
     pid_t pid = fork();
     if (pid == -1) {
         std::cerr << "Failed to fork process" << std::endl;
@@ -156,6 +121,36 @@ void backup_util::set_project_name(string s){
 }
 
 
+bool backup_util :: add (void)
+{
+    return true;
+}
+
+bool backup_util :: status (void)
+{
+    return true;
+    
+}
+
+bool backup_util :: commit (void)
+{
+    return true;
+    
+}
+
+bool backup_util :: restore (void)
+{
+    return true;
+    
+}
+
+bool backup_util :: init (void)
+{
+    return true;
+
+}
+
+
 int main(int argc, char* argv[]) {
     /* Create a Directory to store required files*/
     vector<string> args; 
@@ -186,7 +181,7 @@ int main(int argc, char* argv[]) {
             */
             vector<string> ag;
             ag.push_back("fill_details");
-            remoteutil(1,ag);
+            // remoteutil(1,ag);
             fs::create_directories(".backup_util/firebase"); 
 
             bool status = init_dir_i(args[2], log);

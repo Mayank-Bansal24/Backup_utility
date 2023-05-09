@@ -26,6 +26,12 @@ class backup_util {
         
     public:
     backup_util             (fs::path loc, logger* log);
+    bool                    status ();
+    bool                    add    ();
+    bool                    commit ();
+    bool                    restore();
+    bool                    init   ();
+    int                     remoteutil (int argc, vector<string> argv);
     vector<dir_struct>      get_prev_version (string version_no);
     string                  project;
         
