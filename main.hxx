@@ -35,15 +35,17 @@ public:
     public:
     backup_util             (fs::path loc, logger* log);
     bool                    status (dir_struct last_ver);
-    bool                    init   (vector<string> &args);
-    dir_struct              get_last_dir_struct ();
-    void                    set_author_name(string s);
-    void                    set_project_name(string s);
-    bool                    add    ();
-    bool                    commit ();
-    bool                    restore();
+    backup_util             (fs::path p);
+    bool                    add    (dir_struct last_ver);
+    bool                    commit (dir_struct last_ver);
+    bool                    restore ();
+    bool                    init  (vector<string> &args);
     int                     remoteutil (int argc, vector<string> argv);
     vector<dir_struct>      get_prev_version (string version_no);
+    dir_struct              get_last_dir_struct ();
+    void                    set_author_name (string s);
+    void                    set_project_name (string s);
+    void                    add_dir_version (dir_struct *curr_status);
     void                    dump_backup_util (fs::path p);
     void                    load_backup_util (fs::path p);
         

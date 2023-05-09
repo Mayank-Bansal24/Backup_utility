@@ -128,8 +128,13 @@ void backup_util::set_project_name (string s){
     return;
 }
 
-bool backup_util :: add (void)
+bool backup_util :: add (dir_struct  last_ver)
 {
+    dir_struct* curr_status = new dir_struct (loc, log);
+
+    vector <file_data> mod_files =  curr_status->get_mod_files(last_ver.get_files());
+    
+    
     return true;
 }
 
@@ -180,10 +185,25 @@ bool backup_util :: status (dir_struct  last_ver)
     return true;
 }
 
-bool backup_util :: commit (void)
+void backup_util :: add_dir_version (dir_struct *curr_version)
 {
-    return true;
+    /* Create a version dir and save curr_obj and files*/
     
+    version_list.push_back (*curr_version);
+
+    /* Upload data */
+    /* Other things to do*/
+}
+
+bool backup_util :: commit (dir_struct last_ver)
+{
+    dir_struct* curr_status = new dir_struct (loc, log);
+
+    vector <file_data> mod_files =  curr_status->get_mod_files(last_ver.get_files());
+
+    add_dir_version (curr_status);
+    
+    return true;
 }
 
 bool backup_util :: restore (void)
