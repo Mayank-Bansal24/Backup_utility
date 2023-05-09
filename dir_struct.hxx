@@ -6,9 +6,11 @@
 #include <archive.h>
 #include <archive_entry.h>
 #include "log.hxx"
+#include "json.hxx"
 
 namespace fs = boost::filesystem;
 using namespace std;
+using json = nlohmann::json;
 
 typedef vector <fs::path> vec;
 
@@ -31,6 +33,7 @@ class dir_struct
     public:
     dir_struct                  ();
     dir_struct                  (fs::path dir, logger *log);
+    dir_struct                  (json obj);
     
     intmax_t                    get_dir_size ();
     void                        save_files ();
@@ -39,5 +42,6 @@ class dir_struct
     vector <file_data>          get_mod_files (vector <file_data> prev_version);
     vector <file_data>          get_status ();
     vector <file_data>          get_files_from_dir (fs::path p);
+    json                        dump_dir_struct ();
 
 };

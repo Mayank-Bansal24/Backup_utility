@@ -1,8 +1,10 @@
 #include <bits/stdc++.h>
 #include <boost/filesystem.hpp>
+#include "json.hxx"
 
 using namespace std;
 using namespace boost::filesystem;
+using json = nlohmann::json;
 
 
 enum file_status {
@@ -23,7 +25,9 @@ class file_data {
     
     file_data           ();                     /* Default constructor*/
     file_data           (path loc);             /* Parameterized constructor */
+    file_data           (json obj);             /* Constructor that loads data from json */
     
+    json                dump_file_data ();      /* Returns the object as json */
     intmax_t            get_file_size ();       /* Returns the file size */
     path                get_path ();            /* Returns the path of the file */
     time_t              get_last_mod_time ();   /* Returns the last modified time */

@@ -247,3 +247,29 @@ vector <file_data> dir_struct :: get_status ()
   // return prev;  
 }
 
+json dir_struct::dump_dir_struct ()
+{
+  json obj;
+
+  obj["dir_size"] = this->dir_size;
+  obj["loc"] = this->loc.string();
+  obj["files"] = json::array();
+
+  for(auto it: this->files)
+    obj["files"].push_back(it.dump_file_data());
+
+
+  return obj;
+}
+
+dir_struct :: dir_struct (json obj)
+{
+  this->dir_size = obj["dir_size"];
+  this->loc = (string)obj["loc"];
+  this->files = vector <file_data> ();
+
+  for(auto it: obj["files"])
+    this->files.push_back(file_data(it));
+  
+  return;
+}

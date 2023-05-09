@@ -19,6 +19,7 @@ backup_util :: backup_util (fs::path loc, logger* log)
 
     new_dir = new dir_struct (loc, log);
     this->curr_status = *new_dir;
+    this->version_list.push_back (*new_dir);
     return;
 }
 
@@ -173,6 +174,43 @@ bool backup_util :: init (vector<string> &args)
 dir_struct backup_util :: get_last_dir_struct()
 {
     return this->version_list.back();
+}
+
+
+
+void backup_util :: dump_backup_util (fs::path p)
+{
+    json obj;
+    obj["author_name"] = this->author_name;
+    obj["loc"] = this->loc.string();
+    obj["project_name"] = this->project_name;
+    obj["version_list"] = json::array();
+
+    for (auto it : this->version_list)
+        obj["version_list"].push_back(it.dump_dir_struct());
+
+    std::ofstream ofs(p);
+    ofs << std::setw(4) << obj.dump() << std::endl;
+    return;
+}
+
+backup_util :: backup_util (fs:: path p)
+{
+    // read json from given path
+    std::ifstream ifs(p);
+    json obj = json::parse(ifs); 
+    this->author_name = obj["author_name"];
+    this->loc = (string)obj["loc"];
+    this->project_name = obj["project_name"];
+    this->version_list = vector<dir_struct> ();
+
+    for (auto it : obj["version_list"])
+    {
+        dir_struct dir(it);
+        this->version_list.push_back(dir);
+    }
+
+    return;
 }
 
 int main(int argc, char* argv[]) {
