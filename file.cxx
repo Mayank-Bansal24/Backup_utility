@@ -107,3 +107,8 @@ void file_data :: set_status (int status)
     this->status = status;
     return;
 }
+
+int file_data :: get_status ()
+{
+    return status;
+}

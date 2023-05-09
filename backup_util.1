@@ -1,0 +1,25 @@
+.TH backup_util 1 "May 2023" "1.0" "backup_util man page"
+.SH NAME
+backup_util \- a backup utility
+.SH SYNOPSIS
+.B backup_util
+[\fIOPTION\fR] [\fIFILE\fR]
+.SH DESCRIPTION
+\fBbackup_util\fR is a backup utility that can be used to back up directories and files to a specified location. It can also restore backups that were created using \fBbackup_util\fR.
+.SH OPTIONS
+The following options are available:
+.TP
+\fB-h\fR, \fB--help\fR
+Display help message.
+.TP
+\fB-v\fR, \fB--version\fR
+Display version information.
+.TP
+\fB-d\fR, \fB--dir\fR \fIDIRECTORY\fR
+Specify the directory to back up or restore from.
+.TP
+\fB-o\fR, \fB--output\fR \fIDIRECTORY\fR
+Specify the directory to save the backup to or restore from.
+.SH AUTHOR
+John Doe <john.doe@example.com>
+
