@@ -223,7 +223,7 @@ void backup_util :: dump_backup_util (fs::path p)
     for (auto it : this->version_list)
         obj["version_list"].push_back(it.dump_dir_struct());
 
-    std::ofstream ofs(p);
+    std::ofstream ofs(p.string());
     ofs << std::setw(4) << obj.dump() << std::endl;
     return;
 }
@@ -231,7 +231,7 @@ void backup_util :: dump_backup_util (fs::path p)
 backup_util :: backup_util (fs:: path p)
 {
     // read json from given path
-    std::ifstream ifs(p);
+    std::ifstream ifs(p.string());
     json obj = json::parse(ifs); 
     this->author_name = obj["author_name"];
     this->loc = (string)obj["loc"];
@@ -296,6 +296,11 @@ int main(int argc, char* argv[]) {
     }
     else
     {
+        cout<<"ERROR! Missing Arguments\n";
+        cout<<"1. Use Add command to add file to the directory.\n";
+        cout<<"2. Use Commit command to commit all the file of the directory.\n";
+        cout<<"3. Use Restore command to restore the previous version.\n";
+        cout<<"4. Use Status command to view ths status of all the files of the directory.\n";
         /* Show Help*/
     }
 
