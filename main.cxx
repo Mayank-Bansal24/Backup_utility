@@ -16,12 +16,9 @@ backup_util :: backup_util (fs::path loc, logger* log)
     dir_struct          *new_dir;
 
     this->loc = loc;
-
+    cout << loc.string().size() << "\n";
     new_dir = new dir_struct (loc, log);
     this->curr_status = *new_dir;
-<<<<<<< HEAD
-
-=======
     this->version_list.push_back (*new_dir);
 
     std::ifstream ifs(loc.string());
@@ -36,7 +33,6 @@ backup_util :: backup_util (fs::path loc, logger* log)
         dir_struct dir(it);
         this->version_list.push_back(dir);
     }
->>>>>>> f30a8dc (Removed redundant constructor)
     return;
 }
 
@@ -159,7 +155,6 @@ bool backup_util :: status (dir_struct  last_ver)
 {
     dir_struct* curr_status = new dir_struct (loc, log);
 
-    
     vector<file_data> mod_files = curr_status->get_mod_files(last_ver.get_files());
     vector<file_data> add_file;
     vector<file_data> mod_file;
@@ -167,15 +162,16 @@ bool backup_util :: status (dir_struct  last_ver)
 
     for (file_data ele:mod_files){
         int k=ele.get_status();
-        if(k==0){
+        if(k == ADDED){
             add_file.push_back(ele);
         }
-        else if(k==1){
+        else if (k == MODIFIED){
             mod_file.push_back(ele);
         }
         else{
             del_file.push_back(ele);
         }
+    }
         if(add_file.size()){
             cout<<"These are newly added files\n";
             for (auto ele:add_file){
@@ -194,10 +190,7 @@ bool backup_util :: status (dir_struct  last_ver)
                 cout<<ele.get_path()<<"\n";
             }
         }
-    }
     
-    // Display files changes
-
     /* Return if true if everything happen happily*/
     return true;
 }
@@ -205,9 +198,10 @@ bool backup_util :: status (dir_struct  last_ver)
 void backup_util :: add_dir_version (dir_struct *curr_version)
 {
     /* Create a version dir and save curr_obj and files*/
-    
+    curr_version->save_files(this->version_list.size());
     version_list.push_back (*curr_version);
 
+    this->dump_backup_util();
     /* Upload data */
     /* Other things to do*/
 }
@@ -218,6 +212,7 @@ bool backup_util :: commit (dir_struct last_ver)
 
     vector <file_data> mod_files =  curr_status->get_mod_files(last_ver.get_files());
 
+    curr_status->set_mod_files (mod_files);
     add_dir_version (curr_status);
     
     return true;
@@ -231,6 +226,7 @@ bool backup_util :: restore (void)
 
 bool backup_util :: init (vector<string> &args)
 {
+        bool status = init_dir_i(args[2], log);
         string author_name, project_name;
         cout << "Enter author name: ";
         getline(std::cin, author_name);
@@ -240,21 +236,19 @@ bool backup_util :: init (vector<string> &args)
         getline(std::cin, project_name);
         this->set_project_name(project_name);
 
+        dir_struct *empty_dir = new dir_struct ();
+        this->version_list = { *empty_dir };
+        this->loc = fs::path(args[2]);
+        this->dump_backup_util();
+
         vector<string> ag;
         ag.push_back("fill_details");
         remoteutil(1,ag);
         ag.clear();
         ag.push_back("initialize");
-        ag.push_back("abc");
+        ag.push_back(project_name);
         remoteutil(2,ag);
         fs::create_directories(".backup_util/firebase"); 
-
-        bool status = init_dir_i(args[2], log);
-
-        dir_struct *empty_dir = new dir_struct ();
-        this->version_list = { *empty_dir };
-
-        this->dump_backup_util("./state.json");
 
 
     return true;
@@ -267,7 +261,7 @@ dir_struct backup_util :: get_last_dir_struct()
 
 
 
-void backup_util :: dump_backup_util (fs::path p)
+void backup_util :: dump_backup_util ()
 {
     json obj;
     obj["author_name"] = this->author_name;
@@ -278,16 +272,15 @@ void backup_util :: dump_backup_util (fs::path p)
     for (auto it : this->version_list)
         obj["version_list"].push_back(it.dump_dir_struct());
 
-    std::ofstream ofs(p.string());
+    std::ofstream ofs("./.backup_util/versions/state.json");
     ofs << std::setw(4) << obj.dump() << std::endl;
     return;
 }
 
-<<<<<<< HEAD
-void backup_util :: load_backup_util (fs:: path p)
+void backup_util :: load_backup_util ()
 {
     // read json from given path
-    std::ifstream ifs(p.string());
+    std::ifstream ifs("./.backup_util/versions/state.json");
     json obj = json::parse(ifs); 
     this->author_name = obj["author_name"];
     this->loc = (string)obj["loc"];
@@ -302,8 +295,16 @@ void backup_util :: load_backup_util (fs:: path p)
 
     return;
 }
-=======
->>>>>>> f30a8dc (Removed redundant constructor)
+
+backup_util :: backup_util ()
+{
+
+}
+
+fs::path backup_util:: get_path ()
+{
+    return this->loc;
+}
 
 int main(int argc, char* argv[]) {
     /* Create a Directory to store required files*/
@@ -323,13 +324,14 @@ int main(int argc, char* argv[]) {
         /* Show help page along with steps to run it */
     }
     
-    backup_util* instance = new backup_util (args[2], log);
+    backup_util* instance;
     /* Load File here*/
     backup_util* last_instance;
 
     if (args[1] == "init")
     {
-        log->print ("Running init call on dir" + args[2] + ".", INFORMATION);
+        instance = new backup_util();
+        log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
         status = status & instance->init (args);
         log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
     } 
@@ -339,7 +341,11 @@ int main(int argc, char* argv[]) {
     }
     else if (args[1] == "commit")
     {
-
+        instance = new backup_util ();
+        instance->load_backup_util ();
+        log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
+        status = status & instance->commit (instance->get_last_dir_struct());
+        log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
     }
     else if (args[1] == "restore")
     {
@@ -347,8 +353,12 @@ int main(int argc, char* argv[]) {
     }
     else if (args[1] == "status")
     {
-        log->print ("Running init call on dir" + args[2] + ".", INFORMATION);
-        status = status & instance->status (last_instance->get_last_dir_struct());
+        /* Check for existing version*/
+        instance = new backup_util();
+        cout << "Loading\n";
+        instance->load_backup_util();
+        log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
+        status = status & instance->status (instance->get_last_dir_struct());
         log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
 
     }

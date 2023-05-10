@@ -46,10 +46,19 @@ void dir_struct :: get_files_from_dir_h (fs::path p,
   return;
 }
 
-void dir_struct:: save_files ()
+void dir_struct :: set_mod_files (vector<file_data> &mod_files)
 {
+  this->mod_files = mod_files;
+  return;
+} 
+
+void dir_struct :: save_files (int version_no)
+{
+
+  string output_file = "./.backup_util/versions/files_backup";
+  output_file += to_string(version_no);
+  output_file += ".tar.gz";
   
-  string output_file = "./files_backup.tar.gz";
   struct archive *a = archive_write_new();
   struct archive_entry *entry = nullptr;
 
@@ -58,7 +67,9 @@ void dir_struct:: save_files ()
   archive_write_open_filename(a, output_file.c_str());
 
   std::vector<char> buf(16384);
-    for(auto file: this->files) {
+    for(auto file: this->mod_files) {
+
+      if (file.get_status() == DELETED) continue;
 
       if (file.get_path().string() == "") continue;
       std::string file_path = file.get_path().string();
@@ -187,14 +198,14 @@ dir_struct :: dir_struct (fs::path p, logger* log)
   return;
 }
 
-vector <file_data> dir_struct :: get_new_files ()
+vector <file_data> dir_struct :: get_new_files (vector<file_data> &previous_files)
 {
     map <fs::path, file_data*>              old_struct;
     vector<file_data>                       new_files, new_struct;
 
     new_struct = get_files_from_dir (this->loc);
 
-    for (auto &it:this->files)
+    for (auto &it:previous_files)
       old_struct [it.get_path()] = &it;
 
     for(auto it:new_struct)
@@ -231,11 +242,11 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
       }
   }
 
-  new_files = get_new_files();
+  new_files = get_new_files(prev_version);
 
   for (auto it:new_files)
     {
-     it.set_status(ADDED);
+      it.set_status(ADDED);
       mod_files.push_back (it);
     }
     

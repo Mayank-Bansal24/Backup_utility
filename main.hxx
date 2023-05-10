@@ -34,18 +34,20 @@ public:
         
     public:
     backup_util             (fs::path loc, logger* log);
+    backup_util             ();
     bool                    status (dir_struct last_ver);
     bool                    add    (dir_struct last_ver);
     bool                    commit (dir_struct last_ver);
     bool                    restore ();
     bool                    init  (vector<string> &args);
     int                     remoteutil (int argc, vector<string> argv);
-    vector<dir_struct>      get_prev_version (string version_no);
+    vector<dir_struct>      get_prev_version ();
     dir_struct              get_last_dir_struct ();
     void                    set_author_name (string s);
     void                    set_project_name (string s);
     void                    add_dir_version (dir_struct *curr_status);
-    void                    dump_backup_util (fs::path p);
-    void                    load_backup_util (fs::path p);
+    void                    dump_backup_util ();
+    void                    load_backup_util ();
+    fs::path                get_path();
         
 };

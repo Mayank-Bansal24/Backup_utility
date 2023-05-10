@@ -21,14 +21,14 @@ class dir_struct
     logger                      *log;
     vector <file_data>          files,
                                 mod_files;
-    fs::path                        loc;
+    fs::path                    loc;
 
 
     void                        get_files_from_dir_h (fs::path p,
                                                       vector<file_data> &files);
     void                        add_file (fs::path p,
                                            vector<file_data> &files);     
-    vector <file_data>          get_new_files ();  
+    vector <file_data>          get_new_files (vector<file_data> &previous_files);  
 
     public:
     dir_struct                  ();
@@ -36,8 +36,9 @@ class dir_struct
     dir_struct                  (json obj);
     
     intmax_t                    get_dir_size ();
-    void                        save_files ();
+    void                        save_files (int version_no);
     void                        load_files ();
+    void                        set_mod_files (vector<file_data> &mod_files);
     vector <file_data>          get_files ();
     vector <file_data>          get_mod_files (vector <file_data> prev_version);
     vector <file_data>          get_status ();
