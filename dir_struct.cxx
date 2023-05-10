@@ -117,10 +117,11 @@ void dir_struct :: save_files (int version_no)
 
 }
 
-void dir_struct:: load_files ()
+void dir_struct:: load_files (int Version_no)
 {
 
-  string input_file = "./files_backup.tar.gz";
+  string input_file = "./backup_util/versions/files_backup"+to_string(Version_no)+".tar.gz";
+  cout<<input_file<<endl;
 
     struct archive *a = archive_read_new();
     struct archive_entry *entry = nullptr;
@@ -129,6 +130,7 @@ void dir_struct:: load_files ()
     archive_read_support_filter_all(a);
     archive_read_support_format_all(a);
     r = archive_read_open_filename(a, input_file.c_str(), 10240);
+  
     if (r != ARCHIVE_OK) {
         printf("archive not ok\n");
         return;
@@ -143,7 +145,7 @@ void dir_struct:: load_files ()
         txt = "./diri" + txt;
         string dir_path = txt.substr(0, txt.rfind("/"));
         cout << dir_path << '\n';
-        filesystem::create_directories(dir_path); // TO be fixed
+        fs::create_directories(dir_path); // TO be fixed
         std::ofstream x_file(txt, std::ios::binary);
 
         while(1) {

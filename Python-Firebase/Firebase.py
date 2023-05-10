@@ -124,7 +124,7 @@ def delete_file(Projname,RFilename,Filename=None):
 def download_file(Projname,RFilename,Filepath,Filename):
     storage=connect()
     try:
-      storage.child(Projname+"/"+RFilename).download(Filepath,Filename)
+      storage.child(Projname+"/"+RFilename).download(Filepath+Filename)
       print("File Download Successful")
     except Exception as e:
       error= "File Download Unsuccessful"

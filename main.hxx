@@ -30,7 +30,8 @@ public:
     string                  author_name;
     string                  project_name;
     fs::path                loc;
-    logger*                 log;              
+    logger*                 log;      
+    int                     pushed_version;        
         
     public:
     backup_util             (fs::path loc, logger* log);
@@ -38,7 +39,8 @@ public:
     bool                    status (dir_struct last_ver);
     bool                    add    (dir_struct last_ver);
     bool                    commit (dir_struct last_ver, vector<string> &args);
-    bool                    restore ();
+    bool                    restore (int vn);
+    bool                    push();
     bool                    git_log    ();
     bool                    init  (vector<string> &args);
     bool                    pushtoremote(int vno);

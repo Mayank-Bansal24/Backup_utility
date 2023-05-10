@@ -39,7 +39,7 @@ class dir_struct
     
     intmax_t                    get_dir_size ();
     void                        save_files (int version_no);
-    void                        load_files ();
+    void                        load_files (int Version_no);
     void                        set_mod_files (vector<file_data> &mod_files);
     void                        set_commit_message (string message);
     string                      get_commit_message ();

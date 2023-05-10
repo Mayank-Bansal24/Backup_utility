@@ -206,6 +206,23 @@ void backup_util :: add_dir_version (dir_struct *curr_version)
     /* Other things to do*/
 }
 
+bool backup_util :: push(){
+    
+    int total=this->version_list.size()-1;
+    int cpv=this->pushed_version;
+    for (int i=cpv+1;i<=total;i++){
+        vector<string> arguments;
+    arguments.push_back("upload_file");
+    arguments.push_back(this->project_name);
+    arguments.push_back(to_string(i)+".tar.gz");
+    arguments.push_back("./.backup_util/versions/");
+    arguments.push_back("files_backup"+to_string(i)+".tar.gz");
+    remoteutil(5,arguments);
+    }
+    this->pushed_version=total;
+    this->dump_backup_util();
+}
+
 bool backup_util :: commit (dir_struct last_ver, vector<string> &args)
 {
     string commit_message = "";
@@ -229,8 +246,30 @@ bool backup_util :: commit (dir_struct last_ver, vector<string> &args)
     return true;
 }
 
-bool backup_util :: restore (void)
+bool backup_util :: restore (int vn)
 {
+    if(vn>this->version_list.size()-1){
+        cout<<"Version doesn't exists"<<endl;
+    }
+    else if(vn>this->pushed_version){
+        cout<<"First push the Versions"<<endl;
+    }
+    else{
+        cout<<this->pushed_version<<endl;
+        for (int i=1;i<=vn;i++)
+        {
+                vector<string> arguments;
+                arguments.push_back("download_file");
+                arguments.push_back(this->project_name);
+                arguments.push_back(to_string(i)+".tar.gz");
+                arguments.push_back("./.backup_util/versions/");
+                arguments.push_back("files_backup"+to_string(i)+".tar.gz");
+                remoteutil(5,arguments);
+                this->version_list[i].load_files(i);
+
+        }
+        // this->version_list[1].load_files(1);
+    }
     return true;
     
 }
@@ -262,7 +301,7 @@ bool backup_util :: init (vector<string> &args)
         cout << "Enter author name: ";
         getline(std::cin, author_name);
         this->set_author_name(author_name);
-
+        this->pushed_version=0;
         cout << "Enter project name: ";
         getline(std::cin, project_name);
         this->set_project_name(project_name);
@@ -299,6 +338,7 @@ void backup_util :: dump_backup_util ()
     obj["loc"] = this->loc.string();
     obj["project_name"] = this->project_name;
     obj["version_list"] = json::array();
+    obj["pushed_version"]=this->pushed_version;
 
     for (auto it : this->version_list)
         obj["version_list"].push_back(it.dump_dir_struct());
@@ -316,6 +356,7 @@ void backup_util :: load_backup_util ()
     this->author_name = obj["author_name"];
     this->loc = (string)obj["loc"];
     this->project_name = obj["project_name"];
+    this->pushed_version=obj["pushed_version"];
     this->version_list = vector<dir_struct> ();
 
     for (auto it : obj["version_list"])
@@ -380,7 +421,21 @@ int main(int argc, char* argv[]) {
     }
     else if (args[1] == "restore")
     {
+        instance = new backup_util ();
+        instance->load_backup_util ();
+        int vn;
+        cout<<"Enter the version no to be restored"<<endl;
+        cin>>vn;
+        instance->restore(vn);
+        
 
+
+    }
+    else if (args[1] == "push")
+    {
+        instance = new backup_util ();
+        instance->load_backup_util ();
+        instance->push();
     }
     else if (args[1] == "status")
     {
