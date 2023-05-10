@@ -156,7 +156,6 @@ bool backup_util :: status (dir_struct  last_ver)
     dir_struct* curr_status = new dir_struct (loc, log);
 
     vector<file_data> mod_files = curr_status->get_mod_files(last_ver.get_files());
-
     vector<file_data> add_file;
     vector<file_data> mod_file;
     vector<file_data> del_file;
@@ -181,13 +180,13 @@ bool backup_util :: status (dir_struct  last_ver)
         }
         if(mod_file.size()){
             cout<<"These files are modified use add command to commit\n";
-            for (auto ele:add_file){
+            for (auto ele:mod_file){
                 cout<<ele.get_path()<<"\n";
             }
         }
         if(del_file.size()){
             cout<<"These files are deleted\n";
-            for (auto ele:add_file){
+            for (auto ele:del_file){
                 cout<<ele.get_path()<<"\n";
             }
         }
@@ -216,7 +215,6 @@ bool backup_util :: commit (dir_struct last_ver)
     curr_status->set_mod_files (mod_files);
     add_dir_version (curr_status);
 
-    dump_backup_util();
     
     return true;
 }
@@ -260,7 +258,7 @@ bool backup_util :: init (vector<string> &args)
 
 dir_struct backup_util :: get_last_dir_struct()
 {
-    return this->version_list.back();
+    return this->version_list[version_list.size()-1];
 }
 
 

@@ -17,7 +17,7 @@ class file_data {
 
     bool                empty;                  /* TRUE if the file is empty */
     intmax_t            file_size;              /* for storing file size */
-    fs::path                loc;                    /* Returns the path of the file */
+    fs::path            loc;                    /* Returns the path of the file */
     int                 status;                 /* status of the file*/
     time_t              last_mod_time;          /* for storing last modified time of the files */
     public:

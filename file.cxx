@@ -1,11 +1,12 @@
 #include "file.hxx"
+#include <boost/filesystem/operations.hpp>
 #include <system_error>
 
 /* Default constructor*/
 file_data :: file_data()
 {
     this->empty = true;
-    this->file_size = 0;
+    this->file_size = -1;
     this->status = -1;
     this->last_mod_time = time(0);
     this->loc = fs::path ("./");
@@ -23,7 +24,7 @@ file_data   ::  file_data (fs::path loc)
     if (is_regular_file(loc))        // is p a regular file?
         {
             this->file_size = fs::file_size (loc);
-            this->status = 1;
+            this->status = -1;
         }
     else
         {
@@ -77,27 +78,6 @@ fs::path file_data :: get_path ()
 time_t file_data :: get_last_mod_time()
 {
     return this->last_mod_time;
-}
-
-void file_data :: get_updated ()
-{
-     
-    if((this->empty = fs::is_empty (loc)))
-        return;
-        
-    if (is_regular_file(loc))        
-        {
-            this->file_size = fs::file_size (loc);
-            this->status = 1;
-        }
-    else
-        {
-            this->file_size = 0;
-            this->status = 0;
-        }
-    
-    this->last_mod_time = fs::last_write_time (loc);
-    return;
 }
 
 

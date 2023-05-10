@@ -151,6 +151,7 @@ vector <file_data> dir_struct::get_files_from_dir (fs::path p)
 
   return vec_files;  
 }
+
 dir_struct :: dir_struct ()
 {
   this->loc = "";
@@ -219,26 +220,30 @@ vector <file_data> dir_struct :: get_new_files (vector<file_data> &previous_file
 
 vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
 {
-  file_data*                          old_file = NULL;
+  file_data                          curr_file ,
+                                     old_file;
   vector <file_data>                  mod_files, new_files;
-  map <fs::path, file_data*>           mp;
+  map <string, file_data>           mp;
+  
   for(auto it: this->files)
-    mp[it.get_path()] = &it;
+      mp[it.get_path().string()] = it;
 
   for(auto it: prev_version)
   {
-    old_file = mp[it.get_path()];
-
-    if (old_file == NULL)
+      curr_file = mp[it.get_path().string()];
+      old_file = it;
+     
+    if (curr_file.get_file_size() < 0)
       {
-          old_file->set_status (DELETED);
-          mod_files.push_back (*old_file);
+          old_file.set_status (DELETED);
+          mod_files.push_back (old_file);
       }
-    else if (mp[it.get_path ()]->get_last_mod_time () > it.get_last_mod_time ())
+    else if (curr_file.get_last_mod_time () > old_file.get_last_mod_time ())
       {
-          old_file->set_status (MODIFIED);
-          mod_files.push_back (*old_file);
+          curr_file.set_status (MODIFIED);
+          mod_files.push_back (curr_file);
       }
+      
   }
 
   new_files = get_new_files(prev_version);
@@ -252,12 +257,6 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
   return mod_files;
 }
 
-// vector <file_data> dir_struct :: get_status ()
-// {
-//   // vector <file_data> prev = this->prev_version->get_files();
-
-//   // return prev;  
-// }
 
 json dir_struct::dump_dir_struct ()
 {
