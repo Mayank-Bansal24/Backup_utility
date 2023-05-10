@@ -206,9 +206,19 @@ void backup_util :: add_dir_version (dir_struct *curr_version)
     /* Other things to do*/
 }
 
-bool backup_util :: commit (dir_struct last_ver)
+bool backup_util :: commit (dir_struct last_ver, vector<string> &args)
 {
+    string commit_message = "";
+
+    if (args.size() < 4 || args[2] != "-m")
+    {
+        cout << "Invalid arguments\n";
+        return false;
+    }
+
     dir_struct* curr_status = new dir_struct (loc, log);
+    curr_status->set_commit_message(args[3]);
+    curr_status->set_commit_time(time(NULL));
 
     vector <file_data> mod_files =  curr_status->get_mod_files(last_ver.get_files());
 
@@ -223,6 +233,25 @@ bool backup_util :: restore (void)
 {
     return true;
     
+}
+
+bool backup_util :: git_log (void)
+{
+    int version_no = -1;
+    for (auto it: this->version_list)
+    {
+        version_no++;
+        if (version_no == 0) continue;
+        cout << "Version no: " << version_no << "\n";
+        cout << "Commit Message: " << it.get_commit_message() << "\n";
+
+        time_t commit_time = it.get_commit_time();
+        struct tm t = *localtime(&commit_time);
+        
+        cout << "Time: " <<t.tm_mday<<"/"<<t.tm_mon+1<<"/"<<t.tm_year+1900<<"::"<<t.tm_hour<<":"<<t.tm_min<<":"<<t.tm_sec<<"\n\n";
+    }
+
+    return true;
 }
 
 
@@ -346,7 +375,7 @@ int main(int argc, char* argv[]) {
         instance = new backup_util ();
         instance->load_backup_util ();
         log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
-        status = status & instance->commit (instance->get_last_dir_struct());
+        status = status & instance->commit (instance->get_last_dir_struct(), args);
         log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
     }
     else if (args[1] == "restore")
@@ -362,6 +391,14 @@ int main(int argc, char* argv[]) {
         status = status & instance->status (instance->get_last_dir_struct());
         log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
 
+    }
+    else if (args[1] == "log")
+    {
+        instance = new backup_util();
+        instance->load_backup_util();
+        log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
+        status = status & instance->git_log ();
+        log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
     }
     else
     {

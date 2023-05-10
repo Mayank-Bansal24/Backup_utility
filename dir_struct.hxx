@@ -22,6 +22,8 @@ class dir_struct
     vector <file_data>          files,
                                 mod_files;
     fs::path                    loc;
+    string                      commit_message;
+    time_t                      commit_time;
 
 
     void                        get_files_from_dir_h (fs::path p,
@@ -39,6 +41,10 @@ class dir_struct
     void                        save_files (int version_no);
     void                        load_files ();
     void                        set_mod_files (vector<file_data> &mod_files);
+    void                        set_commit_message (string message);
+    string                      get_commit_message ();
+    void                        set_commit_time (time_t t);
+    time_t                      get_commit_time ();
     vector <file_data>          get_files ();
     vector <file_data>          get_mod_files (vector <file_data> prev_version);
     vector <file_data>          get_status ();

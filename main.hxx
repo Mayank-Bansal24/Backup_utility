@@ -37,8 +37,9 @@ public:
     backup_util             ();
     bool                    status (dir_struct last_ver);
     bool                    add    (dir_struct last_ver);
-    bool                    commit (dir_struct last_ver);
+    bool                    commit (dir_struct last_ver, vector<string> &args);
     bool                    restore ();
+    bool                    git_log    ();
     bool                    init  (vector<string> &args);
     bool                    pushtoremote(int vno);
     int                     remoteutil (int argc, vector<string> argv);

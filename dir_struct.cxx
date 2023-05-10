@@ -52,6 +52,26 @@ void dir_struct :: set_mod_files (vector<file_data> &mod_files)
   return;
 } 
 
+void dir_struct :: set_commit_message (string message)
+{
+  this->commit_message = message;
+}
+
+string dir_struct :: get_commit_message ()
+{
+  return this->commit_message;
+}
+
+void dir_struct :: set_commit_time (time_t t)
+{
+  this->commit_time = t;
+}
+
+time_t dir_struct :: get_commit_time ()
+{
+  return this->commit_time;
+}
+
 void dir_struct :: save_files (int version_no)
 {
 
@@ -123,7 +143,7 @@ void dir_struct:: load_files ()
         txt = "./diri" + txt;
         string dir_path = txt.substr(0, txt.rfind("/"));
         cout << dir_path << '\n';
-        // filesystem::create_directories(dir_path); // TO be fixed
+        filesystem::create_directories(dir_path); // TO be fixed
         std::ofstream x_file(txt, std::ios::binary);
 
         while(1) {
@@ -265,6 +285,8 @@ json dir_struct::dump_dir_struct ()
   obj["dir_size"] = this->dir_size;
   obj["loc"] = this->loc.string();
   obj["files"] = json::array();
+  obj["commit_message"] = this->commit_message;
+  obj["commit_time"] = this->commit_time;
 
   for(auto it: this->files)
     obj["files"].push_back(it.dump_file_data());
@@ -277,6 +299,8 @@ dir_struct :: dir_struct (json obj)
 {
   this->dir_size = obj["dir_size"];
   this->loc = (string) obj["loc"];
+  this->commit_message = (string) obj["commit_message"];  
+  this->commit_time = (time_t) obj["commit_time"];
   this->files = vector <file_data> ();
 
   for(auto it: obj["files"])
