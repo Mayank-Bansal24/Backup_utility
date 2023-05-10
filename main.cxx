@@ -206,6 +206,16 @@ void backup_util :: add_dir_version (dir_struct *curr_version)
     /* Other things to do*/
 }
 
+bool backup_util :: pushtoremote(int vno){
+    vector<string> arguments;
+    arguments.push_back("upload_file");
+    arguments.push_back(this->project_name);
+    arguments.push_back(to_string(vno)+".tar.gz");
+    arguments.push_back("./.backup_util/versions/");
+    arguments.push_back("files_backup"+to_string(vno)+".tar.gz");
+    remoteutil(5,arguments);
+}
+
 bool backup_util :: commit (dir_struct last_ver)
 {
     dir_struct* curr_status = new dir_struct (loc, log);
@@ -214,13 +224,7 @@ bool backup_util :: commit (dir_struct last_ver)
 
     curr_status->set_mod_files (mod_files);
     add_dir_version (curr_status);
-    vector<string> arguments;
-    arguments.push_back("upload_file");
-    arguments.push_back(this->project_name);
-    arguments.push_back(to_string(this->version_list.size()-1)+".tar.gz");
-    arguments.push_back("./.backup_util/versions/");
-    arguments.push_back("files_backup"+to_string(this->version_list.size()-1)+".tar.gz");
-    remoteutil(5,arguments);
+    pushtoremote(this->version_list.size()-1);
     
     return true;
 }
@@ -356,7 +360,34 @@ int main(int argc, char* argv[]) {
     }
     else if (args[1] == "restore")
     {
+        instance = new backup_util ();
+        instance->load_backup_util ();
+        int vno;
+        cout<<"Enter Version no to be restored";
+        cin>>vno;
+        if(instance->version_list.size()-1<vno){
+            cout<<"Version not present"<<endl;
+        }
+        else if(instance->version_list.size()-1==vno){
+            cout<<"You are asking to restore the current version"<<endl;
+        }
+        else{
+            for(int i=1;i<=vno;i++){
+                    vector<string> arguments;
+                    arguments.push_back("download_file");
+                    arguments.push_back(instance->project_name);
+                    arguments.push_back(to_string(i)+".tar.gz");
+                    arguments.push_back("./.backup_util/versions/");
+                    arguments.push_back("files_backup"+to_string(i)+".tar.gz");
+                    instance->remoteutil(5,arguments);
+            }
+            for (int i=1;i<=vno;i++){
+                instance->version_list[i].dump_dir_struct();
+            }
+            
 
+        }
+        
     }
     else if (args[1] == "status")
     {

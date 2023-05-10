@@ -40,6 +40,7 @@ public:
     bool                    commit (dir_struct last_ver);
     bool                    restore ();
     bool                    init  (vector<string> &args);
+    bool                    pushtoremote(int vno);
     int                     remoteutil (int argc, vector<string> argv);
     vector<dir_struct>      get_prev_version ();
     dir_struct              get_last_dir_struct ();
