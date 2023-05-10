@@ -156,6 +156,7 @@ bool backup_util :: status (dir_struct  last_ver)
     dir_struct* curr_status = new dir_struct (loc, log);
 
     vector<file_data> mod_files = curr_status->get_mod_files(last_ver.get_files());
+
     vector<file_data> add_file;
     vector<file_data> mod_file;
     vector<file_data> del_file;
@@ -199,21 +200,11 @@ void backup_util :: add_dir_version (dir_struct *curr_version)
 {
     /* Create a version dir and save curr_obj and files*/
     curr_version->save_files(this->version_list.size());
-    version_list.push_back (*curr_version);
+    this->version_list.push_back (*curr_version);
 
     this->dump_backup_util();
     /* Upload data */
     /* Other things to do*/
-}
-
-bool backup_util :: pushtoremote(int vno){
-    vector<string> arguments;
-    arguments.push_back("upload_file");
-    arguments.push_back(this->project_name);
-    arguments.push_back(to_string(vno)+".tar.gz");
-    arguments.push_back("./.backup_util/versions/");
-    arguments.push_back("files_backup"+to_string(vno)+".tar.gz");
-    remoteutil(5,arguments);
 }
 
 bool backup_util :: commit (dir_struct last_ver)
@@ -224,7 +215,8 @@ bool backup_util :: commit (dir_struct last_ver)
 
     curr_status->set_mod_files (mod_files);
     add_dir_version (curr_status);
-    pushtoremote(this->version_list.size()-1);
+
+    dump_backup_util();
     
     return true;
 }
@@ -234,6 +226,7 @@ bool backup_util :: restore (void)
     return true;
     
 }
+
 
 bool backup_util :: init (vector<string> &args)
 {
@@ -360,40 +353,12 @@ int main(int argc, char* argv[]) {
     }
     else if (args[1] == "restore")
     {
-        instance = new backup_util ();
-        instance->load_backup_util ();
-        int vno;
-        cout<<"Enter Version no to be restored";
-        cin>>vno;
-        if(instance->version_list.size()-1<vno){
-            cout<<"Version not present"<<endl;
-        }
-        else if(instance->version_list.size()-1==vno){
-            cout<<"You are asking to restore the current version"<<endl;
-        }
-        else{
-            for(int i=1;i<=vno;i++){
-                    vector<string> arguments;
-                    arguments.push_back("download_file");
-                    arguments.push_back(instance->project_name);
-                    arguments.push_back(to_string(i)+".tar.gz");
-                    arguments.push_back("./.backup_util/versions/");
-                    arguments.push_back("files_backup"+to_string(i)+".tar.gz");
-                    instance->remoteutil(5,arguments);
-            }
-            for (int i=1;i<=vno;i++){
-                instance->version_list[i].dump_dir_struct();
-            }
-            
 
-        }
-        
     }
     else if (args[1] == "status")
     {
         /* Check for existing version*/
         instance = new backup_util();
-        cout << "Loading\n";
         instance->load_backup_util();
         log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
         status = status & instance->status (instance->get_last_dir_struct());

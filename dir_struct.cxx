@@ -221,21 +221,20 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
 {
   file_data*                          old_file = NULL;
   vector <file_data>                  mod_files, new_files;
-  map <fs::path, file_data>           mp;
-
+  map <fs::path, file_data*>           mp;
   for(auto it: this->files)
-    mp[it.get_path()] = it;
+    mp[it.get_path()] = &it;
 
   for(auto it: prev_version)
   {
-    *old_file = mp[it.get_path()];
+    old_file = mp[it.get_path()];
 
     if (old_file == NULL)
       {
           old_file->set_status (DELETED);
           mod_files.push_back (*old_file);
       }
-    else if (mp[it.get_path ()].get_last_mod_time () > it.get_last_mod_time ())
+    else if (mp[it.get_path ()]->get_last_mod_time () > it.get_last_mod_time ())
       {
           old_file->set_status (MODIFIED);
           mod_files.push_back (*old_file);
