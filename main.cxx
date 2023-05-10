@@ -214,6 +214,13 @@ bool backup_util :: commit (dir_struct last_ver)
 
     curr_status->set_mod_files (mod_files);
     add_dir_version (curr_status);
+    vector<string> arguments;
+    arguments.push_back("upload_file");
+    arguments.push_back(this->project_name);
+    arguments.push_back(to_string(this->version_list.size()-1)+".tar.gz");
+    arguments.push_back("./.backup_util/versions/");
+    arguments.push_back("files_backup"+to_string(this->version_list.size()-1)+".tar.gz");
+    remoteutil(5,arguments);
     
     return true;
 }

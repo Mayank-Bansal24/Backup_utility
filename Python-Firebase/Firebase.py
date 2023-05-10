@@ -60,7 +60,7 @@ def initialize_and_getconfig():
 
 def getconfig():
     try:
-      config=open(Path+'\Config.json')
+      config=open(Path+'/Config.json')
     except Exception as e:
       print("Config Not Present In Required Path")
       print(str(e))
