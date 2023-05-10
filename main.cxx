@@ -399,7 +399,12 @@ int main(int argc, char* argv[]) {
     backup_util* instance;
     /* Load File here*/
     backup_util* last_instance;
-
+    for (auto it:args){
+        string a=it;
+        if((int)a.size()>5 && a.substr(0,5)=="-log="){
+            log->set_flags(a.substr(5, (int)a.size()-5));
+        }
+    }
     if (args[1] == "init")
     {
         instance = new backup_util();
