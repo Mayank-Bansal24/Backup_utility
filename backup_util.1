@@ -20,6 +20,31 @@ Specify the directory to back up or restore from.
 .TP
 \fB-o\fR, \fB--output\fR \fIDIRECTORY\fR
 Specify the directory to save the backup to or restore from.
+.TP
+\fB-t\fR, \fB--type\fR \fIARCHIVE_TYPE\fR
+Specify the type of archive to use (tar, zip, etc.).
+.TP
+\fB-c\fR, \fB--compress\fR
+Compress the backup archive.
+.TP
+\fB-e\fR, \fB--encrypt\fR
+Encrypt the backup archive.
+.TP
+\fB-k\fR, \fB--keep\fR
+Keep the original files after backing them up.
+.SH EXAMPLES
+Create a backup of the /home/user directory:
+.PP
+.B backup_util --dir /home/user --output /backups/ --type tar --compress --encrypt
+.PP
+Restore a backup of the /home/user directory:
+.PP
+.B backup_util --dir /backups/ --output /home/user --type tar --decrypt
 .SH AUTHOR
-John Doe <john.doe@example.com>
+group-10_sys-prac
+.SH COPYRIGHT
+Copyright (C) 2023 group-10_sys-prac
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.
 
