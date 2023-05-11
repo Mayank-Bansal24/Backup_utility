@@ -167,22 +167,34 @@ bool backup_util :: status (dir_struct  last_ver)
         }
     }
         if(add_file.size()){
-            cout<<"These are newly added files\n";
+            cout<<"These are newly added files.\n\n";
             for (auto ele:add_file){
                 cout<<ele.get_path()<<"\n";
             }
+            cout<<"\n";
+        }
+        else{
+            cout<<"There are no newly added files.\n\n";
         }
         if(mod_file.size()){
-            cout<<"These files are modified use add command to commit\n";
+            cout<<"These files are modified and are ready to be commited.\n\n";
             for (auto ele:mod_file){
                 cout<<ele.get_path()<<"\n";
             }
+            cout<<"\n";
+        }
+        else{
+            cout<<"There are no modified files.\n\n";
         }
         if(del_file.size()){
-            cout<<"These files are deleted\n";
+            cout<<"These files are deleted.\n\n";
             for (auto ele:del_file){
                 cout<<ele.get_path()<<"\n";
             }
+            cout<<"\n";
+        }
+        else{
+            cout<<"There are no deleted files.\n\n";
         }
     
     /* Return if true if everything happen happily*/
@@ -417,19 +429,21 @@ int main(int argc, char* argv[]) {
     {
         instance = new backup_util ();
         instance->load_backup_util ();
-        log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
+        log->print ("Running commit call on dir" + instance->get_path().string() + ".", INFORMATION);
         status = status & instance->commit (instance->get_last_dir_struct(), args);
-        log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
+        cout<<"All Files Commited Successfully\n";
+        log->print ("commit exited with status " + to_string((int)status) + ".", INFORMATION); 
     }
     else if (args[1] == "restore")
     {
         instance = new backup_util ();
         instance->load_backup_util ();
         int vn;
-        cout<<"Enter the version no to be restored"<<endl;
+        cout<<"Enter the version no. to be restored"<<endl;
         cin>>vn;
+        log->print("Running restore call on dir",INFORMATION);
         instance->restore(vn);
-        
+        log->print("restore exited",INFORMATION);
 
 
     }
@@ -437,33 +451,36 @@ int main(int argc, char* argv[]) {
     {
         instance = new backup_util ();
         instance->load_backup_util ();
+        log->print("Running push call on dir",INFORMATION);
         instance->push();
+        log->print("push exited",INFORMATION);
     }
     else if (args[1] == "status")
     {
         /* Check for existing version*/
         instance = new backup_util();
         instance->load_backup_util();
-        log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
+        log->print ("Running status call on dir" + instance->get_path().string() + ".", INFORMATION);
         status = status & instance->status (instance->get_last_dir_struct());
-        log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
+        log->print ("status exited with status " + to_string((int)status) + ".", INFORMATION); 
 
     }
     else if (args[1] == "log")
     {
         instance = new backup_util();
         instance->load_backup_util();
-        log->print ("Running init call on dir" + instance->get_path().string() + ".", INFORMATION);
+        log->print ("Running log call on dir" + instance->get_path().string() + ".", INFORMATION);
         status = status & instance->git_log ();
-        log->print ("init exited with status " + to_string((int)status) + ".", INFORMATION); 
+        log->print ("log exited with status " + to_string((int)status) + ".", INFORMATION); 
     }
     else
     {
-        cout<<"ERROR! Missing Arguments\n";
-        cout<<"1. Use Add command to add file to the directory.\n";
-        cout<<"2. Use Commit command to commit all the file of the directory.\n";
-        cout<<"3. Use Restore command to restore the previous version.\n";
-        cout<<"4. Use Status command to view ths status of all the files of the directory.\n";
+        cout<<"1. Use \"init\" command to initialize the directory.\n";
+        cout<<"2. Use \"commit\" command to commit all the file of the directory.\n";
+        cout<<"3. Use \"restore\" command to restore the previous version.\n";
+        cout<<"4. Use \"status\" command to view the status of all the files of the directory.\n";
+        cout<<"5. Use \"log\" command to view the commit history.\n";
+        cout<<"6. Use \"push\" command to push the folder to the firebase.\n";
         /* Show Help*/
     }
 
