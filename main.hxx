@@ -3,6 +3,7 @@
 #include <boost/filesystem.hpp>
 
 #include <stdio.h>
+#include <glob.h>
 #include <iostream>
 #include <vector>
 #include <cstring>

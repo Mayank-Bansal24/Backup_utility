@@ -1,5 +1,8 @@
 #include "main.hxx"
 #include "log.hxx"
+#include <boost/filesystem/operations.hpp>
+#include <boost/regex.hpp>
+#include <boost/algorithm/string/replace.hpp>
 
 vector<string> process_args (int argc, char* argv[])
 {   
@@ -38,7 +41,7 @@ backup_util :: backup_util (fs::path loc, logger* log)
 
 int backup_util :: remoteutil(int argc, vector<string> argv) 
 {
-    
+    fs::create_directories("./.backup_util/jsons/");
     // cout<<argc;
     pid_t pid = fork();
 
@@ -52,7 +55,7 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
     {
         std::vector<char*> c_args;
          c_args.push_back(const_cast<char*>("python3"));
-        c_args.push_back(const_cast<char*>("../Python-Firebase/Firebase.py"));
+        c_args.push_back(const_cast<char*>("/usr/local/bin/Python-Firebase/Firebase.py"));
         for (const auto& arg : argv) {
             c_args.push_back(const_cast<char*>(arg.c_str()));
         }
@@ -69,7 +72,7 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
         wait(&status);
         if (WIFEXITED(status)) 
         {
-            fs::path path("../Python-Firebase/");
+            fs::path path("./.backup_util/jsons/");
     int count = 0;
     for (const auto& entry : fs::directory_iterator(path)) {
         if (entry.path().extension() == ".json") {
@@ -88,7 +91,7 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
     cout<<"Enter the source of service Account key"<<endl;
     cin>>src;
     char* srcf=&src[0];
-    char* proc_args[] = {"cp",srcf,"../Python-Firebase/"};
+    char* proc_args[] = {"cp",srcf,"./.backup_util/jsons/"};
     
     proc_args[3]=NULL;
     
@@ -141,15 +144,6 @@ void backup_util::set_project_name (string s){
     return;
 }
 
-bool backup_util :: add (dir_struct  last_ver)
-{
-    dir_struct* curr_status = new dir_struct (loc, log);
-
-    vector <file_data> mod_files =  curr_status->get_mod_files(last_ver.get_files());
-    
-    
-    return true;
-}
 
 bool backup_util :: status (dir_struct  last_ver)
 {
@@ -414,7 +408,10 @@ int main(int argc, char* argv[]) {
     } 
     else if (args[1] == "add")
     {
-
+        // instance = new backup_util();
+        // instance->load_backup_util ();
+        // status = status & instance->add (instance->get_last_dir_struct(), args[2]);
+        // cout << "Done" << "\n";
     }
     else if (args[1] == "commit")
     {

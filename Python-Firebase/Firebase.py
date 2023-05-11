@@ -2,7 +2,7 @@ from pyrebase import pyrebase
 import os
 import sys
 import json
-Path =os.path.dirname(__file__)
+Path ="./.backup_util/jsons/"
 
 def fill_details():
   flag=False
@@ -144,10 +144,6 @@ def geturl(Projname,RFilename):
       print(str(e))
       return error
 
-# v=len(sys.argv) - 1
-
-# for i in range(v):
-#   print(sys.argv[i])
     
 cmd=sys.argv[1]
 
