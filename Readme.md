@@ -10,6 +10,9 @@ In the end, we will develop a tool that provides you with the services you want 
 	1) Meson
 	1) Boost
 	1) Ninja
+	1) PyreBase4
+	1) Requests-toolbelt 0.10.1 
+	1) Libarchive 
 
  ---
  
@@ -22,9 +25,18 @@ In the end, we will develop a tool that provides you with the services you want 
 
 		3.For installing Ninja: `sudo apt-get install ninja-build`
 
+		1.For installing PyreBase4: `pip install pyrebase4`
+
+		1.For installing Requests-toolbelt 0.10.1 : `pip install requests-toolbelt==0.10.1`
+
+		1.For installing Libarchive: `sudo apt-get install libarchive-dev`
+
+
 	1) mkdir build
 	1) meson build
 	1) cd ./build
 	1) ninja
 	1) ./backup_util
  
+# Conclusion: 
+Therefore, we have finally created a utility that can provide the customer the necessary services in addition to all of the options he may choose from to maintain his data secure. Additionally, the application is particularly user-friendly in that we give the client the tools he needs to customize the backup process to meet his needs. Everything is operating really efficiently. With a few prior requirements, which we are also supplying as a script in bash to run initially, this application is able to be launched on any Linux machine.
