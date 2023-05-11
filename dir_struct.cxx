@@ -120,7 +120,7 @@ void dir_struct :: save_files (int version_no)
 void dir_struct:: load_files (int Version_no)
 {
 
-  string input_file = "./backup_util/versions/files_backup"+to_string(Version_no)+".tar.gz";
+  string input_file = "./.backup_util/versions/files_backup"+to_string(Version_no)+".tar.gz";
   cout<<input_file<<endl;
 
     struct archive *a = archive_read_new();
