@@ -37,6 +37,7 @@ void dir_struct :: get_files_from_dir_h (fs::path p,
 
    for (vec::const_iterator it(v.begin()), it_end(v.end()); it != it_end; ++it)
    {
+     if (p.string().find(".backup_util") != std::string::npos) continue;
      if (is_regular_file (*it))
         add_file (*it, files);
      else 
@@ -89,6 +90,7 @@ void dir_struct :: save_files (int version_no)
   std::vector<char> buf(16384);
     for(auto file: this->mod_files) {
 
+      if (file.get_path().string().find(".backup_util") != std::string::npos) continue;
       if (file.get_status() == DELETED) continue;
 
       if (file.get_path().string() == "") continue;
@@ -120,6 +122,16 @@ void dir_struct :: save_files (int version_no)
 void dir_struct:: load_files (int Version_no)
 {
 
+  // // Delete previous files
+  // for (auto it: this->mod_files)
+  // {
+  //   if (it.get_status() == DELETED)
+  //   {
+  //     fs::remove(it.get_path());
+  //   }
+  // }
+
+  // Load added and modified files
   string input_file = "./.backup_util/versions/files_backup"+to_string(Version_no)+".tar.gz";
   cout<<input_file<<endl;
 
@@ -163,6 +175,7 @@ void dir_struct:: load_files (int Version_no)
     }
 
     archive_read_free(a);
+
 }
 
 vector <file_data> dir_struct::get_files_from_dir (fs::path p)
@@ -252,6 +265,8 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
 
   for(auto it: prev_version)
   {
+      if (it.get_path().string().find(".backup_util") != std::string::npos) continue;
+
       curr_file = mp[it.get_path().string()];
       old_file = it;
      
@@ -272,6 +287,8 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
 
   for (auto it:new_files)
     {
+      if (it.get_path().string().find(".backup_util") != std::string::npos) continue;
+
       it.set_status(ADDED);
       mod_files.push_back (it);
     }
@@ -287,11 +304,14 @@ json dir_struct::dump_dir_struct ()
   obj["dir_size"] = this->dir_size;
   obj["loc"] = this->loc.string();
   obj["files"] = json::array();
+  obj["mod_files"] = json::array();
   obj["commit_message"] = this->commit_message;
   obj["commit_time"] = this->commit_time;
 
   for(auto it: this->files)
     obj["files"].push_back(it.dump_file_data());
+  for(auto it: this->mod_files)
+    obj["mod_files"].push_back(it.dump_file_data());
 
 
   return obj;
@@ -304,10 +324,15 @@ dir_struct :: dir_struct (json obj)
   this->commit_message = (string) obj["commit_message"];  
   this->commit_time = (time_t) obj["commit_time"];
   this->files = vector <file_data> ();
+  this->mod_files = vector <file_data> ();
 
   for(auto it: obj["files"])
     {
       this->files.push_back(file_data(it, 0));
+    }
+  for(auto it: obj["mod_files"])
+    {
+      this->mod_files.push_back(file_data(it, 0));
     }
   return;
 }
