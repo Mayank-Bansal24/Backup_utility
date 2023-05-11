@@ -25,11 +25,11 @@ In the end, we will develop a tool that provides you with the services you want 
 
 		3.For installing Ninja: `sudo apt-get install ninja-build`
 
-		1.For installing PyreBase4: `pip install pyrebase4`
+		4.For installing PyreBase4: `pip install pyrebase4`
 
-		1.For installing Requests-toolbelt 0.10.1 : `pip install requests-toolbelt==0.10.1`
+		5.For installing Requests-toolbelt 0.10.1 : `pip install requests-toolbelt==0.10.1`
 
-		1.For installing Libarchive: `sudo apt-get install libarchive-dev`
+		6.For installing Libarchive: `sudo apt-get install libarchive-dev`
 
 
 	1) mkdir build
