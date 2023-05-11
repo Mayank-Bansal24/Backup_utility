@@ -103,7 +103,7 @@ def upload_file(Projname,RFilename,Filepath,Filename):
     storage=connect()
     try:
       storage.child(Projname+"/"+RFilename).put(Filepath+Filename)
-      print("File Upload Successful")
+      print("Version", RFilename,"File Upload Successful")
     except Exception as e:
       error= "File Upload Unsuccessful"
       print(error)
@@ -125,7 +125,7 @@ def download_file(Projname,RFilename,Filepath,Filename):
     storage=connect()
     try:
       storage.child(Projname+"/"+RFilename).download(Filepath+Filename)
-      print("File Download Successful")
+      print("Version", RFilename,"File Download Successful")
     except Exception as e:
       error= "File Download Unsuccessful"
       print(error)

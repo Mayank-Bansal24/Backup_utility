@@ -236,6 +236,7 @@ bool backup_util :: commit (dir_struct last_ver, vector<string> &args)
     if (args.size() < 4 || args[2] != "-m")
     {
         cout << "Invalid arguments\n";
+        cout<< "Enter the commit message\n";
         return false;
     }
 
@@ -247,7 +248,7 @@ bool backup_util :: commit (dir_struct last_ver, vector<string> &args)
 
     curr_status->set_mod_files (mod_files);
     add_dir_version (curr_status);
-
+    cout<<"Version"<<this->version_list.size()-1<<" created"<<"\n";
     
     return true;
 }
@@ -261,7 +262,7 @@ bool backup_util :: restore (int vn)
         cout<<"First push the Versions"<<endl;
     }
     else{
-        cout<<this->pushed_version<<endl;
+        // cout<<this->pushed_version<<endl;
         for (int i=1;i<=vn;i++)
         {
                 vector<string> arguments;
@@ -431,7 +432,7 @@ int main(int argc, char* argv[]) {
         instance->load_backup_util ();
         log->print ("Running commit call on dir" + instance->get_path().string() + ".", INFORMATION);
         status = status & instance->commit (instance->get_last_dir_struct(), args);
-        cout<<"All Files Commited Successfully\n";
+        if (status) cout<<"All Files Commited Successfully\n";
         log->print ("commit exited with status " + to_string((int)status) + ".", INFORMATION); 
     }
     else if (args[1] == "restore")

@@ -122,18 +122,19 @@ void dir_struct :: save_files (int version_no)
 void dir_struct:: load_files (int Version_no)
 {
 
-  // // Delete previous files
-  // for (auto it: this->mod_files)
-  // {
-  //   if (it.get_status() == DELETED)
-  //   {
-  //     fs::remove(it.get_path());
-  //   }
-  // }
+  // Delete previous files
+  for (auto it: this->mod_files)
+  {
+    if (it.get_status() == DELETED)
+    {
+      // cout << it.get_path() << " deleted\n";
+      fs::remove(it.get_path().string());
+    }
+  }
 
   // Load added and modified files
   string input_file = "./.backup_util/versions/files_backup"+to_string(Version_no)+".tar.gz";
-  cout<<input_file<<endl;
+  // cout<<input_file<<endl;
 
     struct archive *a = archive_read_new();
     struct archive_entry *entry = nullptr;
@@ -153,11 +154,16 @@ void dir_struct:: load_files (int Version_no)
     
         string txt = archive_entry_pathname(entry);
         std::replace(txt.begin(), txt.end(), '\\', '/');
-        txt.erase(0, 1);
-        txt = "./diri" + txt;
-        string dir_path = txt.substr(0, txt.rfind("/"));
-        cout << dir_path << '\n';
-        fs::create_directories(dir_path); // TO be fixed
+        // txt.erase(0, 1);
+        txt = "" + txt;
+        // cout <<  << '\n';
+        // if (txt.rfind("/") > 1) {
+          string dir_path = txt.substr(0, txt.rfind("/"));
+          // cout << dir_path << "\n";
+          if (dir_path != "."){
+          fs::create_directories(dir_path); // TO be fixed
+          }
+        // }
         std::ofstream x_file(txt, std::ios::binary);
 
         while(1) {
