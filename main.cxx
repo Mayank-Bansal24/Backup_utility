@@ -169,7 +169,7 @@ bool backup_util :: status (dir_struct  last_ver)
         if(add_file.size()){
             cout<<"These are newly added files.\n\n";
             for (auto ele:add_file){
-                cout<<ele.get_path()<<"\n";
+                cout<<"\033[0;32m"<<ele.get_path().string()<<"\033[0m"<<"\n";
             }
             cout<<"\n";
         }
@@ -179,7 +179,7 @@ bool backup_util :: status (dir_struct  last_ver)
         if(mod_file.size()){
             cout<<"These files are modified and are ready to be commited.\n\n";
             for (auto ele:mod_file){
-                cout<<ele.get_path()<<"\n";
+                cout<<"\033[0;35m"<<ele.get_path().string()<<"\033[0m"<<"\n";
             }
             cout<<"\n";
         }
@@ -189,7 +189,7 @@ bool backup_util :: status (dir_struct  last_ver)
         if(del_file.size()){
             cout<<"These files are deleted.\n\n";
             for (auto ele:del_file){
-                cout<<ele.get_path()<<"\n";
+                cout<<"\033[0;31m"<<ele.get_path().string()<<"\033[0m"<<"\n";
             }
             cout<<"\n";
         }
@@ -288,13 +288,13 @@ bool backup_util :: git_log (void)
     {
         version_no++;
         if (version_no == 0) continue;
-        cout << "Version no: " << version_no << "\n";
-        cout << "Commit Message: " << it.get_commit_message() << "\n";
+        cout << "\033[0;33m" << "Version no: " << version_no << "\033[0m" << "\n";
+        cout << "\033[0;33m" << "Commit Message: " << it.get_commit_message() << "\033[0m" << "\n";
 
         time_t commit_time = it.get_commit_time();
         struct tm t = *localtime(&commit_time);
         
-        cout << "Time: " <<t.tm_mday<<"/"<<t.tm_mon+1<<"/"<<t.tm_year+1900<<"::"<<t.tm_hour<<":"<<t.tm_min<<":"<<t.tm_sec<<"\n\n";
+        cout << "\033[0;34m" << "Time: " <<t.tm_mday<<"/"<<t.tm_mon+1<<"/"<<t.tm_year+1900<<"::"<<t.tm_hour<<":"<<t.tm_min<<":"<<t.tm_sec<<"\033[0m"<<"\n\n";
     }
 
     return true;
@@ -398,9 +398,17 @@ int main(int argc, char* argv[]) {
     /* Checking if the path is provided or not*/
     if (argc < 2 )
     {
-        cout << "Please provide the path for the directory to be in backup!!" << "\n";
+        // cout << "Please provide the path for the directory to be in backup!!" << "\n";
         log->print ("Please provide the path for the directory to be in backup!!", ERROR);
         /* Show help page along with steps to run it */
+        cout<<"1. Use \"init\" command to initialize the directory.\n";
+        cout<<"2. Use \"commit\" command to commit all the file of the directory.\n";
+        cout<<"3. Use \"restore\" command to restore the previous version.\n";
+        cout<<"4. Use \"status\" command to view the status of all the files of the directory.\n";
+        cout<<"5. Use \"log\" command to view the commit history.\n";
+        cout<<"6. Use \"push\" command to push the folder to the firebase.\n";
+        /* Show Help*/
+        return 0;
     }
     
     backup_util* instance;

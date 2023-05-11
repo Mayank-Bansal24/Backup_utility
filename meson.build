@@ -17,7 +17,7 @@ executable ('backup_util',
 		'log.cxx',
 		'json.hxx',
 		dependencies : [boost_dep, libarch_dep],
-		cpp_args :['-g'],
+		cpp_args :['-g', '-w'],
 		install: true)
 	    
 
