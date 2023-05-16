@@ -40,3 +40,7 @@ In the end, we will develop a tool that provides you with the services you want 
  
 # Conclusion: 
 Therefore, we have finally created a utility that can provide the customer the necessary services in addition to all of the options he may choose from to maintain his data secure. Additionally, the application is particularly user-friendly in that we give the client the tools he needs to customize the backup process to meet his needs. Everything is operating really efficiently. With a few prior requirements, which we are also supplying as a script in bash to run initially, this application is able to be launched on any Linux machine.
+
+
+https://github.com/vermamohit13/Backup_utility/assets/91749483/2ae4fa60-1c06-4a94-b341-79f0f1e4d8ac
+
