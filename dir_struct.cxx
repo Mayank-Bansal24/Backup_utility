@@ -214,12 +214,11 @@ dir_struct :: dir_struct (fs::path p, logger* log)
           log->print("Path must be a directory not a file.\n",'e');
           cout << "Path must be a directory not a file.\n" << '\n';   
         }  
-      else if (is_directory (p))      
-        {
+      else if (is_directory (p)) {
           this->files = get_files_from_dir (p);
           this->dir_size  = get_dir_size();
         }
-      else{
+      else {
         log->print(p.string()+" exists, but is not a directory\n",'e');
         cout << p << " exists, but is not a directory\n";
       }
@@ -267,7 +266,7 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
   map <string, file_data>           mp;
   
   for(auto it: this->files)
-      mp[it.get_path().string()] = it;
+      mp[it.get_path().string()] = it;      // we map the file's path to the file
 
   for(auto it: prev_version)
   {
@@ -278,6 +277,7 @@ vector <file_data> dir_struct :: get_mod_files (vector<file_data> prev_version)
      
     if (curr_file.get_file_size() < 0)
       {
+        // in case file was present in previous version, we set its status to be deleted and push in the modified list
           old_file.set_status (DELETED);
           mod_files.push_back (old_file);
       }
@@ -318,7 +318,6 @@ json dir_struct::dump_dir_struct ()
     obj["files"].push_back(it.dump_file_data());
   for(auto it: this->mod_files)
     obj["mod_files"].push_back(it.dump_file_data());
-
 
   return obj;
 }
