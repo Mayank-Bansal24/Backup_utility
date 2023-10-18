@@ -48,11 +48,13 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
 
     if (pid == -1) 
     {
+        // failed to fork
         std::cerr << "Failed to fork process" << std::endl;
         return 1;
     }
     else if (pid == 0) 
     {
+        // child case
         std::vector<char*> c_args;
          c_args.push_back(const_cast<char*>("python3"));
         c_args.push_back(const_cast<char*>("/usr/local/bin/Python-Firebase/Firebase.py"));
@@ -68,6 +70,7 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
     } 
     else 
     {
+        // parent 
         int status;
         wait(&status);
         if (WIFEXITED(status)) 
@@ -79,50 +82,50 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
             count++;
         }
     }
-            if(argc==1 && count<2){
-            pid_t pid = fork();
-            if (pid == -1) {
-                std::cerr << "Failed to fork process" << std::endl;
-                return 1;
-    } 
-    else if (pid == 0) {
-    char* command = "cp";
-    string src;
-    cout<<"Enter the source of service Account key"<<endl;
-    cin>>src;
-    char* srcf=&src[0];
-    char* proc_args[] = {"cp",srcf,"./.backup_util/jsons/"};
-    
-    proc_args[3]=NULL;
-    
-    
-    int status_code = execvp(command,proc_args);
-
-    if (status_code == -1) {
-        printf("Process did not terminate correctly\n");
-    }
+    if(argc==1 && count<2) {
+        pid_t pid = fork();
+        if (pid == -1) {
+            // fork() falied
+            std::cerr << "Failed to fork process" << std::endl;
+            return 1;
+        } 
+        else if (pid == 0) {
+            // child process
+        char* command = "cp";
+        string src;
+        cout<<"Enter the source of service Account key"<<endl;
+        cin>>src;
+        char* srcf=&src[0];
+        char* proc_args[] = {"cp",srcf,"./.backup_util/jsons/"};
         
-        return 0;
-    }
+        proc_args[3]=NULL;
+        
+        
+        int status_code = execvp(command,proc_args);
+
+        if (status_code == -1) {
+            printf("Process did not terminate correctly\n");
+        }
+            
+            return 0;
+        }
             
 
+        else {
+            // Parent process
+        
+            int status;
+            wait(&status);
+            if (WIFEXITED(status)) {
+                
+                std::cout << "Child process exited with status code " << WEXITSTATUS(status) << std::endl;
 
-
-            else {
-        // Parent process
-       
-        int status;
-        wait(&status);
-        if (WIFEXITED(status)) {
-            
-            std::cout << "Child process exited with status code " << WEXITSTATUS(status) << std::endl;
-
-        } else {
-            std::cerr << "Child process terminated abnormally" << std::endl;
-            return 1;
+            } else {
+                std::cerr << "Child process terminated abnormally" << std::endl;
+                return 1;
+            }
         }
     }
-            }
 
         } else {
             std::cerr << "Child process terminated abnormally" << std::endl;
@@ -130,7 +133,6 @@ int backup_util :: remoteutil(int argc, vector<string> argv)
         }
     }
     
-
     return 0;
 }
 void backup_util::set_author_name (string s){
@@ -166,36 +168,36 @@ bool backup_util :: status (dir_struct  last_ver)
             del_file.push_back(ele);
         }
     }
-        if(add_file.size()){
-            cout<<"These are newly added files.\n\n";
-            for (auto ele:add_file){
-                cout<<"\033[0;32m"<<ele.get_path().string()<<"\033[0m"<<"\n";
-            }
-            cout<<"\n";
+    if(add_file.size()){
+        cout<<"These are newly added files.\n\n";
+        for (auto ele:add_file){
+            cout<<"\033[0;32m"<<ele.get_path().string()<<"\033[0m"<<"\n";
         }
-        else{
-            cout<<"There are no newly added files.\n\n";
+        cout<<"\n";
+    }
+    else{
+        cout<<"There are no newly added files.\n\n";
+    }
+    if(mod_file.size()){
+        cout<<"These files are modified and are ready to be commited.\n\n";
+        for (auto ele:mod_file){
+            cout<<"\033[0;35m"<<ele.get_path().string()<<"\033[0m"<<"\n";
         }
-        if(mod_file.size()){
-            cout<<"These files are modified and are ready to be commited.\n\n";
-            for (auto ele:mod_file){
-                cout<<"\033[0;35m"<<ele.get_path().string()<<"\033[0m"<<"\n";
-            }
-            cout<<"\n";
+        cout<<"\n";
+    }
+    else{
+        cout<<"There are no modified files.\n\n";
+    }
+    if(del_file.size()){
+        cout<<"These files are deleted.\n\n";
+        for (auto ele:del_file){
+            cout<<"\033[0;31m"<<ele.get_path().string()<<"\033[0m"<<"\n";
         }
-        else{
-            cout<<"There are no modified files.\n\n";
-        }
-        if(del_file.size()){
-            cout<<"These files are deleted.\n\n";
-            for (auto ele:del_file){
-                cout<<"\033[0;31m"<<ele.get_path().string()<<"\033[0m"<<"\n";
-            }
-            cout<<"\n";
-        }
-        else{
-            cout<<"There are no deleted files.\n\n";
-        }
+        cout<<"\n";
+    }
+    else{
+        cout<<"There are no deleted files.\n\n";
+    }
     
     /* Return if true if everything happen happily*/
     return true;
@@ -207,6 +209,7 @@ void backup_util :: add_dir_version (dir_struct *curr_version)
     curr_version->save_files(this->version_list.size());
     this->version_list.push_back (*curr_version);
 
+    // Conert to json
     this->dump_backup_util();
     /* Upload data */
     /* Other things to do*/
@@ -233,6 +236,8 @@ bool backup_util :: commit (dir_struct last_ver, vector<string> &args)
 {
     string commit_message = "";
 
+    // -m is for messgage  
+    // command should be like git commit -m "Files to be comitted" .
     if (args.size() < 4 || args[2] != "-m")
     {
         cout << "Invalid arguments\n";
@@ -262,7 +267,6 @@ bool backup_util :: restore (int vn)
         cout<<"First push the Versions"<<endl;
     }
     else{
-        // cout<<this->pushed_version<<endl;
         for (int i=1;i<=vn;i++)
         {
                 vector<string> arguments;
@@ -275,7 +279,6 @@ bool backup_util :: restore (int vn)
                 this->version_list[i].load_files(i);
 
         }
-        // this->version_list[1].load_files(1);
     }
     return true;
     
@@ -326,7 +329,6 @@ bool backup_util :: init (vector<string> &args)
         ag.push_back(project_name);
         remoteutil(2,ag);
         fs::create_directories(".backup_util/firebase"); 
-
 
     return true;
 }
@@ -387,12 +389,12 @@ fs::path backup_util:: get_path ()
 
 int main(int argc, char* argv[]) {
     /* Create a Directory to store required files*/
-    vector<string>      args; 
-    logger              *log;
-    bool                status;
-    log = new logger();
+    vector<string>      args;           // To store argv's in form of vector<string>
+    logger              *log;           // To track previous logs and add new ones 
+    bool                status;         // Check current status of the process
+    log = new logger();                 // Initialize the status
 
-    args =  process_args(argc, argv);
+    args =  process_args(argc, argv);   //  function to store argv's in form of vector<string>
     // log->set_flags(args[2]);   /// TO be fixed
     
     /* Checking if the path is provided or not*/

@@ -15,10 +15,5 @@ init_dir_i (string path, logger *new_instance)
     fs::create_directories (dir.string() + ".backup_util/versions");
     dir_struct dir_struct_obj = dir_struct(dir, new_instance);
 
-    // for (auto it: dir_struct_obj.get_files())
-    // {
-    //     cout << it.get_path().string() << "\n";
-    // }
-
     return success;
 }
